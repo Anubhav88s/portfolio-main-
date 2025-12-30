@@ -1,6 +1,7 @@
 'use client'
 import React, { useRef, useState } from 'react'
 import { motion, useMotionValue, useSpring, useTransform } from 'framer-motion'
+import Image from 'next/image'
 
 const skillCategories = [
     {
@@ -122,8 +123,14 @@ const TiltCard = ({ category, index }: { category: typeof skillCategories[0], in
                             }}
                             className="flex items-center gap-3 p-3 rounded-2xl bg-white/[0.03] border border-white/[0.05] transition-all cursor-default group/item"
                         >
-                            <div className="w-8 h-8 flex items-center justify-center group-hover/item:scale-110 transition-transform duration-300">
-                                <img src={skill.icon} alt={skill.name} className="w-full h-full object-contain" />
+                            <div className="w-8 h-8 flex items-center justify-center group-hover/item:scale-110 transition-transform duration-300 relative">
+                                <Image
+                                    src={skill.icon}
+                                    alt={skill.name}
+                                    fill
+                                    sizes="32px"
+                                    className="object-contain"
+                                />
                             </div>
                             <span className="text-sm text-gray-300 font-semibold group-hover/item:text-white transition-colors">
                                 {skill.name}

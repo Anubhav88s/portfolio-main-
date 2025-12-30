@@ -1,5 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 import { Github, ExternalLink } from 'lucide-react'
 
 const projects = [
@@ -93,10 +94,12 @@ export default function Projects() {
 
                             <div className="relative glass-card p-5 h-full group-hover:border-purple-500/30 transition-colors duration-300">
                                 <div className="relative w-full h-[230px] bg-black/50 rounded-2xl overflow-hidden shadow-2xl">
-                                    <img
+                                    <Image
                                         src={project.image}
                                         alt={project.name}
-                                        className={`w-full h-full transform group-hover:scale-110 transition-transform duration-700 ease-in-out ${project.name === 'Sync-Fit' ? 'object-contain p-2 bg-[#1d1836]' : 'object-cover'}`}
+                                        fill
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        className={`transform group-hover:scale-110 transition-transform duration-700 ease-in-out ${project.name === 'Sync-Fit' ? 'object-contain p-2 bg-[#1d1836]' : 'object-cover'}`}
                                     />
                                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-[2px]">
                                         <a
