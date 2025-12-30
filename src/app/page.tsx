@@ -1,8 +1,13 @@
 'use client'
 
+import dynamic from 'next/dynamic'
+
 import Scene from '@/components/canvas/Scene'
 import Stars from '@/components/canvas/Stars'
-import Spline from '@splinetool/react-spline'
+const Spline = dynamic(() => import('@splinetool/react-spline'), {
+  ssr: false,
+  loading: () => <div className="w-full h-full flex items-center justify-center text-white/20">Loading 3D Scene...</div>
+})
 import { motion } from 'framer-motion'
 import React from 'react'
 import { Download } from 'lucide-react'

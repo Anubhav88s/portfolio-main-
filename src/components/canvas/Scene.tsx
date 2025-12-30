@@ -17,7 +17,8 @@ export default function Scene({ children }: { children: React.ReactNode }) {
             <Canvas
                 camera={{ position: [0, 0, 1] }}
                 gl={{ antialias: true, alpha: true }}
-                dpr={[1, 1.5]}
+                // Optimize fill-rate on mobile by capping DPR at 1
+                dpr={typeof window !== 'undefined' && window.innerWidth < 768 ? [1, 1] : [1, 1.5]}
                 className="pointer-events-auto"
             >
                 <AdaptiveDpr pixelated />
