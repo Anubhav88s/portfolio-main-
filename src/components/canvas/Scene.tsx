@@ -1,7 +1,7 @@
 'use client'
 
 import { Canvas } from '@react-three/fiber'
-import { Preload } from '@react-three/drei'
+import { Preload, AdaptiveDpr } from '@react-three/drei'
 import { Suspense } from 'react'
 
 export default function Scene({ children }: { children: React.ReactNode }) {
@@ -18,8 +18,9 @@ export default function Scene({ children }: { children: React.ReactNode }) {
                 camera={{ position: [0, 0, 1] }}
                 gl={{ antialias: true, alpha: true }}
                 dpr={[1, 1.5]}
-                className="pointer-events-auto" // Re-enable pointer events for 3D interactions
+                className="pointer-events-auto"
             >
+                <AdaptiveDpr pixelated />
                 <Suspense fallback={null}>
                     {children}
                     <Preload all />

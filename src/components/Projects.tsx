@@ -87,8 +87,9 @@ export default function Projects() {
                             key={`project-${index}`}
                             initial={{ opacity: 0, y: 50 }}
                             whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.2 }}
-                            className="relative group sm:w-[360px] w-full"
+                            transition={{ delay: index * 0.1, duration: 0.4 }}
+                            viewport={{ once: true }}
+                            className="bg-[#151030] rounded-2xl w-full sm:w-[360px] cursor-pointer"
                         >
                             <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-2xl opacity-0 group-hover:opacity-75 blur transition duration-500 group-hover:duration-200"></div>
 

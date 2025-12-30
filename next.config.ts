@@ -32,6 +32,12 @@ const nextConfig: NextConfig = {
     NEXT_PUBLIC_EMAILJS_TEMPLATE_ID: process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID || '',
     NEXT_PUBLIC_EMAILJS_PUBLIC_KEY: process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY || '',
   },
+  compiler: {
+    removeConsole: process.env.NODE_ENV === "production",
+  },
+  images: {
+    formats: ['image/avif', 'image/webp'],
+  },
 };
 
 export default nextConfig;

@@ -24,7 +24,6 @@ export default function Home() {
       <Navbar />
       <FloatingSocials />
 
-      {/* Background 3D Stars - Layer 1 (z-0) */}
       <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none">
         <Scene>
           <Stars />
@@ -59,8 +58,8 @@ export default function Home() {
                   initial={{ y: 100, opacity: 0 }}
                   animate={{ y: 0, opacity: 1 }}
                   transition={{
-                    duration: 0.8,
-                    delay: index * 0.08,
+                    duration: 0.5,
+                    delay: index * 0.05,
                     ease: [0.2, 0.65, 0.3, 0.9],
                   }}
                   className="text-5xl sm:text-7xl md:text-8xl font-black text-transparent drop-shadow-2xl inline-block"
