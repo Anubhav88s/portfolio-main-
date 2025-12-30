@@ -47,7 +47,7 @@ export default function Experience() {
                             key={index}
                             initial={{ x: index % 2 === 0 ? -100 : 100, opacity: 0 }}
                             whileInView={{ x: 0, opacity: 1 }}
-                            transition={{ duration: 0.5 }}
+                            transition={{ duration: 0.4 }}
                             className={`flex flex-col md:flex-row gap-4 items-center ${index % 2 === 0 ? '' : 'md:flex-row-reverse'}`}
                         >
                             <div className="w-full md:w-[70%] lg:w-1/2 p-6 md:p-8 rounded-2xl bg-[#1d1836]/80 backdrop-blur-sm border border-gray-800 hover:border-purple-500 transition-colors">

@@ -52,7 +52,7 @@ export default function About() {
                     <motion.div
                         initial={{ opacity: 0, x: 50 }}
                         whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.3, duration: 0.5 }}
+                        transition={{ delay: 0.2, duration: 0.4 }}
                         className="relative w-full max-w-[300px] aspect-square flex-shrink-0"
                     >
                         <div className="w-full h-full rounded-2xl overflow-hidden border-2 border-violet-500/30 shadow-2xl shadow-violet-500/20 group relative">

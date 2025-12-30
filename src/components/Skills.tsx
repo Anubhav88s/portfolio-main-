@@ -91,7 +91,7 @@ const TiltCard = ({ category, index }: { category: typeof skillCategories[0], in
             }}
             initial={{ opacity: 0, y: 50 }}
             whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8, delay: index * 0.1 }}
+            transition={{ duration: 0.5, delay: index * 0.1 }}
             className="relative group w-full h-full"
         >
             {/* Background Glow */}
@@ -113,9 +113,9 @@ const TiltCard = ({ category, index }: { category: typeof skillCategories[0], in
                     {category.skills.map((skill, sIndex) => (
                         <motion.div
                             key={skill.name}
-                            initial={{ opacity: 0 }}
-                            whileInView={{ opacity: 1 }}
-                            transition={{ delay: 0.3 + sIndex * 0.05 }}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: sIndex * 0.05, duration: 0.2 }}
                             whileHover={{
                                 scale: 1.05,
                                 backgroundColor: "rgba(255,255,255,0.05)",
@@ -157,7 +157,7 @@ export default function Skills() {
                 <motion.div
                     initial={{ opacity: 0, y: -20 }}
                     whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.8 }}
+                    transition={{ duration: 0.5 }}
                     className="text-center mb-16 md:mb-24"
                 >
                     <span className="inline-block px-4 py-1 rounded-full bg-white/5 border border-white/10 text-gray-400 text-xs md:text-sm font-semibold uppercase tracking-widest mb-4">
