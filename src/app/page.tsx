@@ -3,6 +3,7 @@
 import dynamic from 'next/dynamic'
 import { motion } from 'framer-motion'
 import { Download } from 'lucide-react'
+import { useState, useEffect } from 'react'
 import Navbar from '@/components/Navbar'
 import About from '@/components/About'
 import Experience from '@/components/Experience'
@@ -19,23 +20,46 @@ const Stars = dynamic(() => import('@/components/canvas/Stars'), { ssr: false })
 const Spline = dynamic(() => import('@splinetool/react-spline'), { ssr: false })
 
 export default function Home() {
+  const [isDesktop, setIsDesktop] = useState(false);
+
+  useEffect(() => {
+    const handleResize = () => {
+      setIsDesktop(window.innerWidth > 768);
+    };
+
+    handleResize(); // Check on mount
+    window.addEventListener('resize', handleResize);
+    return () => window.removeEventListener('resize', handleResize);
+  }, []);
+
   return (
     <main className="relative w-full min-h-screen text-white bg-black">
       <Navbar />
       <FloatingSocials />
 
-      {/* Background 3D Stars - Layer 1 (z-0) */}
-      <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none">
-        <Scene>
-          <Stars />
-        </Scene>
-      </div>
+      {/* Background 3D Stars - Layer 1 (z-0) - Only on Desktop */}
+      {isDesktop && (
+        <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none">
+          <Scene>
+            <Stars />
+          </Scene>
+        </div>
+      )}
 
-      <div className="fixed top-0 left-0 w-full h-full z-[1] pointer-events-auto opacity-80">
-        <Spline
-          scene="https://prod.spline.design/w4XzV4rpmJ6ohp8I/scene.splinecode"
-        />
-      </div>
+      {isDesktop && (
+        <div className="fixed top-0 left-0 w-full h-full z-[1] pointer-events-auto opacity-80">
+          <Spline
+            scene="https://prod.spline.design/w4XzV4rpmJ6ohp8I/scene.splinecode"
+          />
+        </div>
+      )}
+
+      {/* Mobile Fallback Background */}
+      {!isDesktop && (
+        <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-purple-900/20 via-black to-black">
+          {/* Optional: Add simple CSS stars or just keep the gradient */}
+        </div>
+      )}
 
       <WatermarkBlocker />
 
