@@ -56,9 +56,9 @@ export default function About() {
                     >
                         <div className="w-full h-full rounded-2xl overflow-hidden border-2 border-violet-500/30 shadow-2xl shadow-violet-500/20 group">
                             <img
-                                src="/assets/profile_image.PNG"
+                                src="/assets/profile_v2.jpg"
                                 alt="Profile"
-                                className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500 scale-100 group-hover:scale-110"
+                                className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500 scale-125 group-hover:scale-135 origin-top -translate-x-6"
                             />
                             <div className="absolute inset-0 bg-violet-500/10 mix-blend-overlay group-hover:bg-transparent transition-colors duration-300 pointer-events-none" />
                         </div>
