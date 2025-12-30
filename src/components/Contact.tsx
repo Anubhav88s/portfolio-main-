@@ -1,6 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
-import { useState, useRef } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import { Send, Download } from 'lucide-react'
 import emailjs from '@emailjs/browser'
 import Link from 'next/link'
@@ -13,6 +13,14 @@ export default function Contact() {
         message: '',
     })
     const [loading, setLoading] = useState(false)
+    const [isMobile, setIsMobile] = useState(false)
+
+    useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768)
+        checkMobile()
+        window.addEventListener('resize', checkMobile)
+        return () => window.removeEventListener('resize', checkMobile)
+    }, [])
 
     const [success, setSuccess] = useState(false)
 
@@ -49,7 +57,7 @@ export default function Contact() {
                 <motion.div
                     initial={{ x: -50, opacity: 0 }}
                     whileInView={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.4 }}
+                    transition={{ duration: isMobile ? 0.8 : 0.4, ease: "easeOut" }}
                     className="flex-[0.75] bg-[#191924]/80 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-gray-800"
                 >
                     <p className="text-[14px] md:text-[18px] text-gray-400 uppercase tracking-wider">Get in touch</p>
@@ -106,7 +114,7 @@ export default function Contact() {
                 <motion.div
                     initial={{ x: 50, opacity: 0 }}
                     whileInView={{ x: 0, opacity: 1 }}
-                    transition={{ duration: 0.4 }}
+                    transition={{ duration: isMobile ? 0.8 : 0.4, ease: "easeOut" }}
                     className="flex-[0.75] flex items-center justify-center p-8 text-center"
                 >
                     <div>

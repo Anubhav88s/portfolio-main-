@@ -1,7 +1,10 @@
 'use client'
 
-import dynamic from 'next/dynamic'
+import Scene from '@/components/canvas/Scene'
+import Stars from '@/components/canvas/Stars'
+import Spline from '@splinetool/react-spline'
 import { motion } from 'framer-motion'
+import React from 'react'
 import { Download } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 import About from '@/components/About'
@@ -14,11 +17,18 @@ import FloatingSocials from '@/components/FloatingSocials'
 import WatermarkBlocker from '@/components/WatermarkBlocker'
 
 
-const Scene = dynamic(() => import('@/components/canvas/Scene'), { ssr: false })
-const Stars = dynamic(() => import('@/components/canvas/Stars'), { ssr: false })
-const Spline = dynamic(() => import('@splinetool/react-spline'), { ssr: false })
+
 
 export default function Home() {
+  const [isMobile, setIsMobile] = React.useState(false);
+
+  React.useEffect(() => {
+    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
+
   return (
     <main className="relative w-full min-h-screen text-white bg-black">
       <Navbar />
@@ -78,7 +88,7 @@ export default function Home() {
                 download="Anubhav_Resume"
                 initial={{ opacity: 0, y: 20 }}
                 animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: 1.5, duration: 0.8 }}
+                transition={{ delay: isMobile ? 0.5 : 1.5, duration: 0.8 }}
                 className="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white transition-all duration-300 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] transform hover:-translate-y-1"
               >
                 <span className="flex items-center gap-3">

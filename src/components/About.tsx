@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import React from 'react'
 import Image from 'next/image'
 // We might add Tilt later if we install react-tilt or similar, or just use framer motion hover
 // For now, pure CSS/framer motion cards
@@ -24,14 +25,24 @@ const services = [
     },
 ]
 
-export default function About() {
+const AboutMemo = () => {
+    const [isMobile, setIsMobile] = React.useState(false);
+
+    React.useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     return (
-        <section id="about" className="relative w-full min-h-screen mx-auto flex flex-col justify-center items-center p-10 bg-transparent snap-start">
+        <section id="about" className="relative w-full min-h-screen mx-auto flex flex-col justify-center items-center px-6 py-10 md:p-14 bg-transparent snap-start">
             <div className="max-w-7xl w-full z-10 pointer-events-auto">
                 <motion.div
-                    initial={{ opacity: 0, y: 50 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
+                    initial={isMobile ? { opacity: 0, y: 0 } : { opacity: 0, y: 50 }}
+                    whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                    transition={{ duration: isMobile ? 0.8 : 0.5, ease: "easeOut" }}
+                    viewport={{ once: true, amount: 0.1 }}
                 >
                     <p className="text-[14px] md:text-[18px] text-gray-400 uppercase tracking-wider">Introduction</p>
                     <h2 className="text-white font-black text-[30px] xs:text-[40px] sm:text-[50px] md:text-[60px]">Overview.</h2>
@@ -39,9 +50,10 @@ export default function About() {
 
                 <div className="mt-4 flex flex-col md:flex-row gap-8 md:gap-10 items-center">
                     <motion.p
-                        initial={{ opacity: 0, x: -50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2, duration: 0.5 }}
+                        initial={isMobile ? { opacity: 0, x: 0 } : { opacity: 0, x: -50 }}
+                        whileInView={isMobile ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+                        transition={{ delay: isMobile ? 0 : 0.2, duration: isMobile ? 0.8 : 0.5, ease: "easeOut" }}
+                        viewport={{ once: true, amount: 0.1 }}
                         className="text-gray-300 text-[15px] md:text-[17px] leading-[26px] md:leading-[30px] flex-1 text-justify"
                     >
                         An independent and self-motivated individual with a strong work ethic and commitment to achieving
@@ -50,9 +62,10 @@ export default function About() {
                     </motion.p>
 
                     <motion.div
-                        initial={{ opacity: 0, x: 50 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: 0.2, duration: 0.4 }}
+                        initial={isMobile ? { opacity: 0, x: 0 } : { opacity: 0, x: 50 }}
+                        whileInView={isMobile ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
+                        transition={{ delay: isMobile ? 0 : 0.2, duration: isMobile ? 0.8 : 0.4, ease: "easeOut" }}
+                        viewport={{ once: true, amount: 0.1 }}
                         className="relative w-full max-w-[300px] aspect-square flex-shrink-0"
                     >
                         <div className="w-full h-full rounded-2xl overflow-hidden border-2 border-violet-500/30 shadow-2xl shadow-violet-500/20 group relative">
@@ -75,7 +88,8 @@ export default function About() {
                                 initial={{ opacity: 0, scale: 0.8 }}
                                 whileInView={{ opacity: 1, scale: 1 }}
                                 whileHover={{ y: -10, transition: { duration: 0.2 } }}
-                                transition={{ delay: index * 0.1, duration: 0.5 }}
+                                transition={{ delay: isMobile ? 0 : index * 0.1, duration: 0.5 }}
+                                viewport={{ once: true }}
                                 className="w-full max-w-[280px] py-5 px-8 md:px-12 glass-card flex flex-col justify-evenly items-center hover:border-purple-500/50 transition-colors duration-300 group"
                             >
                                 <motion.div
@@ -95,3 +109,5 @@ export default function About() {
         </section>
     )
 }
+
+export default React.memo(AboutMemo)

@@ -47,7 +47,8 @@ const skillCategories = [
     }
 ]
 
-const TiltCard = ({ category, index }: { category: typeof skillCategories[0], index: number }) => {
+const TiltCard = (props: { category: typeof skillCategories[0], index: number, isMobile: boolean }) => {
+    const { category, index } = props
     const ref = useRef<HTMLDivElement>(null)
     const x = useMotionValue(0)
     const y = useMotionValue(0)
@@ -89,9 +90,10 @@ const TiltCard = ({ category, index }: { category: typeof skillCategories[0], in
                 rotateX,
                 transformStyle: "preserve-3d",
             }}
-            initial={{ opacity: 0, y: 50 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: index * 0.1 }}
+            initial={props.isMobile ? { opacity: 0, y: 0 } : { opacity: 0, y: 50 }}
+            whileInView={props.isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+            transition={{ duration: props.isMobile ? 0.8 : 0.5, delay: props.index * 0.1, ease: "easeOut" }}
+            viewport={{ once: true, amount: 0.1 }}
             className="relative group w-full h-full"
         >
             {/* Background Glow */}
@@ -116,6 +118,7 @@ const TiltCard = ({ category, index }: { category: typeof skillCategories[0], in
                             initial={{ opacity: 0, y: 20 }}
                             whileInView={{ opacity: 1, y: 0 }}
                             transition={{ delay: sIndex * 0.05, duration: 0.2 }}
+                            viewport={{ once: true }}
                             whileHover={{
                                 scale: 1.05,
                                 backgroundColor: "rgba(255,255,255,0.05)",
@@ -146,7 +149,16 @@ const TiltCard = ({ category, index }: { category: typeof skillCategories[0], in
     )
 }
 
-export default function Skills() {
+const SkillsMemo = () => {
+    const [isMobile, setIsMobile] = React.useState(false);
+
+    React.useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     return (
         <section id="skills" className="relative w-full min-h-screen py-16 md:py-24 flex flex-col justify-center items-center overflow-hidden snap-start">
             {/* Ambient Background Lights */}
@@ -155,9 +167,10 @@ export default function Skills() {
 
             <div className="max-w-7xl w-full px-6 z-10 pointer-events-auto">
                 <motion.div
-                    initial={{ opacity: 0, y: -20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    transition={{ duration: 0.5 }}
+                    initial={isMobile ? { opacity: 0, y: 0 } : { opacity: 0, y: -20 }}
+                    whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                    transition={{ duration: isMobile ? 0.8 : 0.5, ease: "easeOut" }}
+                    viewport={{ once: true, amount: 0.1 }}
                     className="text-center mb-16 md:mb-24"
                 >
                     <span className="inline-block px-4 py-1 rounded-full bg-white/5 border border-white/10 text-gray-400 text-xs md:text-sm font-semibold uppercase tracking-widest mb-4">
@@ -177,10 +190,12 @@ export default function Skills() {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-stretch">
                     {skillCategories.map((category, index) => (
-                        <TiltCard key={category.title} category={category} index={index} />
+                        <TiltCard key={category.title} category={category} index={isMobile ? 0 : index} isMobile={isMobile} />
                     ))}
                 </div>
             </div>
         </section>
     )
 }
+
+export default React.memo(SkillsMemo)
