@@ -39,11 +39,13 @@ export default function Home() {
       <Navbar />
       <FloatingSocials />
 
-      <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none">
-        <Scene>
-          <Stars />
-        </Scene>
-      </div>
+      {!isMobile && (
+        <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none">
+          <Scene>
+            <Stars />
+          </Scene>
+        </div>
+      )}
 
       <div className="fixed top-0 left-0 w-full h-full z-[1] pointer-events-auto opacity-80">
         <Spline

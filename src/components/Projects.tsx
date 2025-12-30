@@ -15,7 +15,7 @@ const projects = [
             { name: "express", color: "text-pink-500" },
         ],
         image: "/assets/second-brain.jpg",
-        source_code_link: "https://github.com/Anubhav88s/secondBrain",
+        source_code_link: "https://github.com/Anubhav88s/secondBrain.git",
     },
 
     {
@@ -28,7 +28,7 @@ const projects = [
             { name: "express", color: "text-pink-500" },
         ],
         image: "/assets/SyncFit.png",
-        source_code_link: "https://github.com/Anubhav88s/Sync-Fit",
+        source_code_link: "https://github.com/Anubhav88s/Sync-Fit.git",
     },
     {
         name: "Course Selling Website",
@@ -40,7 +40,7 @@ const projects = [
             { name: "javascript", color: "text-yellow-400" },
         ],
         image: "/assets/course-selling.png",
-        source_code_link: "https://github.com/Anubhav88s/course-selling",
+        source_code_link: "https://github.com/Anubhav88s/course-selling.git",
     }
 ]
 
@@ -55,8 +55,8 @@ const ProjectsMemo = () => {
     }, []);
 
     return (
-        <section id="projects" className="relative w-full min-h-screen flex flex-col justify-center items-center px-6 py-10 md:p-14 bg-transparent snap-start">
-            <div className="max-w-7xl w-full z-10 pointer-events-auto">
+        <section id="projects" className="relative w-full min-h-screen flex flex-col justify-center items-center px-6 py-10 md:p-14 bg-transparent snap-start pointer-events-auto">
+            <div className="max-w-7xl w-full z-10">
                 <motion.div
                     initial={isMobile ? { opacity: 0 } : { opacity: 0 }}
                     whileInView={isMobile ? { opacity: 1 } : { opacity: 1 }}
@@ -85,7 +85,7 @@ const ProjectsMemo = () => {
                             whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
                             transition={{ delay: isMobile ? 0 : index * 0.1, duration: isMobile ? 0.8 : 0.4, ease: "easeOut" }}
                             viewport={{ once: true, amount: 0.1 }}
-                            className="bg-[#151030] rounded-2xl w-full sm:w-[360px] cursor-pointer"
+                            className="relative bg-[#151030] rounded-2xl w-full sm:w-[360px] cursor-pointer group"
                         >
                             <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-2xl opacity-0 group-hover:opacity-75 blur transition duration-500 group-hover:duration-200"></div>
 
