@@ -1,6 +1,7 @@
 'use client'
 
 import Link from 'next/link'
+import Image from 'next/image'
 import { useState, useEffect } from 'react'
 import { Menu, X } from 'lucide-react'
 
@@ -46,9 +47,11 @@ export default function Navbar() {
                         window.scrollTo(0, 0)
                     }}
                 >
-                    <img
+                    <Image
                         src="/assets/logo.png"
                         alt="Anubhav"
+                        width={100}
+                        height={40}
                         className="h-10 w-auto object-contain brightness-110 contrast-110"
                     />
                 </Link>

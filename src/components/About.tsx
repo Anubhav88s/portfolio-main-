@@ -1,6 +1,7 @@
 'use client'
 
 import { motion } from 'framer-motion'
+import Image from 'next/image'
 // We might add Tilt later if we install react-tilt or similar, or just use framer motion hover
 // For now, pure CSS/framer motion cards
 
@@ -54,13 +55,15 @@ export default function About() {
                         transition={{ delay: 0.3, duration: 0.5 }}
                         className="relative w-full max-w-[300px] aspect-square flex-shrink-0"
                     >
-                        <div className="w-full h-full rounded-2xl overflow-hidden border-2 border-violet-500/30 shadow-2xl shadow-violet-500/20 group">
-                            <img
+                        <div className="w-full h-full rounded-2xl overflow-hidden border-2 border-violet-500/30 shadow-2xl shadow-violet-500/20 group relative">
+                            <Image
                                 src="/assets/profile_v2.jpg"
                                 alt="Profile"
-                                className="w-full h-full object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500 scale-125 group-hover:scale-135 origin-top -translate-x-6"
+                                fill
+                                sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                className="object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500 scale-125 group-hover:scale-135 origin-top -translate-x-6"
                             />
-                            <div className="absolute inset-0 bg-violet-500/10 mix-blend-overlay group-hover:bg-transparent transition-colors duration-300 pointer-events-none" />
+                            <div className="absolute inset-0 bg-violet-500/10 mix-blend-overlay group-hover:bg-transparent transition-colors duration-300 pointer-events-none z-10" />
                         </div>
                     </motion.div>
                 </div>
