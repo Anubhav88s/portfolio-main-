@@ -1,5 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
+import React from 'react'
 import Image from 'next/image'
 import { Github, ExternalLink } from 'lucide-react'
 
@@ -16,28 +17,7 @@ const projects = [
         image: "/assets/second-brain.jpg",
         source_code_link: "https://github.com/Anubhav88s/secondBrain",
     },
-    {
-        name: "Netflix Clone",
-        description:
-            "A Netflix frontend clone replicating the original platform's interface. Features a responsive layout, movie thumbnails, category sections, and smooth navigation for a visual user experience.",
-        tags: [
-            { name: "html", color: "text-orange-500" },
-            { name: "css", color: "text-blue-400" },
-        ],
-        image: "/assets/Netflix.jpg",
-        source_code_link: "https://github.com/Anubhav88s/Netflix_frontend",
-    },
-    {
-        name: "X.com Clone",
-        description:
-            "A Twitter frontend clone closely resembling the original interface. Includes a responsive layout, tweet sections, sidebars, and smooth navigation for a clean, modern experience.",
-        tags: [
-            { name: "tailwind", color: "text-cyan-400" },
-            { name: "react", color: "text-blue-500" },
-        ],
-        image: "/assets/X_logo.jpg",
-        source_code_link: "https://github.com/Anubhav88s/twitter_frontend",
-    },
+
     {
         name: "Sync-Fit",
         description:
@@ -64,18 +44,34 @@ const projects = [
     }
 ]
 
-export default function Projects() {
+const ProjectsMemo = () => {
+    const [isMobile, setIsMobile] = React.useState(false);
+
+    React.useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     return (
-        <section id="projects" className="relative w-full min-h-screen flex flex-col justify-center items-center p-10 bg-transparent snap-start">
+        <section id="projects" className="relative w-full min-h-screen flex flex-col justify-center items-center px-6 py-10 md:p-14 bg-transparent snap-start">
             <div className="max-w-7xl w-full z-10 pointer-events-auto">
-                <motion.div initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}>
+                <motion.div
+                    initial={isMobile ? { opacity: 0 } : { opacity: 0 }}
+                    whileInView={isMobile ? { opacity: 1 } : { opacity: 1 }}
+                    viewport={{ once: true, amount: 0.1 }}
+                    className="text-center"
+                >
                     <p className="text-[14px] md:text-[18px] text-gray-400 uppercase tracking-wider">My work</p>
                     <h2 className="text-white font-black text-[30px] xs:text-[40px] sm:text-[50px] md:text-[60px]">Projects.</h2>
                 </motion.div>
-                <div className="w-full flex">
+                <div className="w-full flex justify-center">
                     <motion.p
-                        initial={{ opacity: 0 }} whileInView={{ opacity: 1 }}
-                        className="mt-3 text-secondary text-[15px] md:text-[17px] max-w-3xl leading-[26px] md:leading-[30px] text-gray-300"
+                        initial={{ opacity: 0 }}
+                        whileInView={{ opacity: 1 }}
+                        viewport={{ once: true, amount: 0.1 }}
+                        className="mt-3 text-secondary text-[15px] md:text-[17px] max-w-3xl leading-[26px] md:leading-[30px] text-gray-300 text-center"
                     >
                         Here are some of my recent projects that showcase my technical expertise and creative approach.
                     </motion.p>
@@ -85,10 +81,10 @@ export default function Projects() {
                     {projects.map((project, index) => (
                         <motion.div
                             key={`project-${index}`}
-                            initial={{ opacity: 0, y: 50 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: index * 0.1, duration: 0.4 }}
-                            viewport={{ once: true }}
+                            initial={isMobile ? { opacity: 0, y: 0 } : { opacity: 0, y: 50 }}
+                            whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
+                            transition={{ delay: isMobile ? 0 : index * 0.1, duration: isMobile ? 0.8 : 0.4, ease: "easeOut" }}
+                            viewport={{ once: true, amount: 0.1 }}
                             className="bg-[#151030] rounded-2xl w-full sm:w-[360px] cursor-pointer"
                         >
                             <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-2xl opacity-0 group-hover:opacity-75 blur transition duration-500 group-hover:duration-200"></div>
@@ -137,3 +133,5 @@ export default function Projects() {
         </section>
     )
 }
+
+export default React.memo(ProjectsMemo)

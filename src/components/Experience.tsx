@@ -1,5 +1,6 @@
 'use client'
 import { motion } from 'framer-motion'
+import React from 'react'
 import { ExternalLink } from 'lucide-react'
 
 const experiences = [
@@ -29,13 +30,23 @@ const experiences = [
     },
 ]
 
-export default function Experience() {
+const ExperienceMemo = () => {
+    const [isMobile, setIsMobile] = React.useState(false);
+
+    React.useEffect(() => {
+        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        checkMobile();
+        window.addEventListener('resize', checkMobile);
+        return () => window.removeEventListener('resize', checkMobile);
+    }, []);
+
     return (
-        <section id="work" className="relative w-full min-h-screen flex flex-col justify-center items-center p-10 bg-transparent snap-start">
+        <section id="work" className="relative w-full min-h-screen flex flex-col justify-center items-center px-6 py-10 md:p-14 bg-transparent snap-start">
             <div className="max-w-7xl w-full z-10 pointer-events-auto">
                 <motion.div
                     initial={{ opacity: 0 }}
                     whileInView={{ opacity: 1 }}
+                    viewport={{ once: true, amount: 0.1 }}
                 >
                     <p className="text-[14px] md:text-[18px] text-gray-400 uppercase tracking-wider text-center">What I have done so far</p>
                     <h2 className="text-white font-black text-[30px] xs:text-[40px] sm:text-[50px] md:text-[60px] text-center">Work Experience.</h2>
@@ -45,9 +56,10 @@ export default function Experience() {
                     {experiences.map((exp, index) => (
                         <motion.div
                             key={index}
-                            initial={{ x: index % 2 === 0 ? -100 : 100, opacity: 0 }}
-                            whileInView={{ x: 0, opacity: 1 }}
-                            transition={{ duration: 0.4 }}
+                            initial={isMobile ? { opacity: 0, x: 0 } : { x: index % 2 === 0 ? -100 : 100, opacity: 0 }}
+                            whileInView={isMobile ? { opacity: 1, x: 0 } : { x: 0, opacity: 1 }}
+                            transition={{ duration: isMobile ? 0.8 : 0.4, ease: "easeOut" }}
+                            viewport={{ once: true, amount: 0.1 }}
                             className={`flex flex-col md:flex-row gap-4 items-center ${index % 2 === 0 ? '' : 'md:flex-row-reverse'}`}
                         >
                             <div className="w-full md:w-[70%] lg:w-1/2 p-6 md:p-8 rounded-2xl bg-[#1d1836]/80 backdrop-blur-sm border border-gray-800 hover:border-purple-500 transition-colors">
@@ -89,3 +101,5 @@ export default function Experience() {
         </section>
     )
 }
+
+export default React.memo(ExperienceMemo)
