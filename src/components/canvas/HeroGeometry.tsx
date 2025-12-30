@@ -14,7 +14,7 @@ export default function HeroGeometry() {
 
     return (
         <Float speed={2} rotationIntensity={1} floatIntensity={2}>
-            <Sphere ref={ref} args={[1, 100, 200]} scale={2.5} position={[0, 0, 0]}>
+            <Sphere ref={ref} args={[1, 64, 64]} scale={2.5} position={[0, 0, 0]}>
                 <MeshDistortMaterial
                     color="#6d28d9"
                     attach="material"

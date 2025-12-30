@@ -8,7 +8,8 @@ import { inSphere } from 'maath/random'
 export default function Stars(props: any) {
     const ref = useRef<any>(null)
     const [sphere] = useState(() => {
-        const count = typeof window !== 'undefined' && window.innerWidth < 768 ? 300 : 1000;
+        // Optimized for Exynos 9611: drastically reduce count on mobile to prevent lag with double canvas
+        const count = typeof window !== 'undefined' && window.innerWidth < 768 ? 100 : 1000;
         return inSphere(new Float32Array(count * 3), { radius: 1.5 }) as Float32Array
     })
 
