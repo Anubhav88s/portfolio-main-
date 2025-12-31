@@ -56,13 +56,13 @@ const ExperienceMemo = () => {
                     {experiences.map((exp, index) => (
                         <motion.div
                             key={index}
-                            initial={isMobile ? { opacity: 0, x: 0 } : { x: index % 2 === 0 ? -100 : 100, opacity: 0 }}
-                            whileInView={isMobile ? { opacity: 1, x: 0 } : { x: 0, opacity: 1 }}
-                            transition={{ duration: isMobile ? 0.8 : 0.4, ease: "easeOut" }}
-                            viewport={{ once: true, amount: 0.1 }}
-                            className={`flex flex-col md:flex-row gap-4 items-center ${index % 2 === 0 ? '' : 'md:flex-row-reverse'}`}
+                            initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
+                            whileInView={{ opacity: 1, x: 0 }}
+                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            viewport={{ once: true, amount: 0.2 }}
+                            className="w-full flex"
                         >
-                            <div className="w-full md:w-[70%] lg:w-1/2 p-6 md:p-8 rounded-2xl bg-[#1d1836]/80 backdrop-blur-sm border border-gray-800 hover:border-purple-500 transition-colors">
+                            <div className={`w-full md:w-[75%] lg:w-[48%] p-5 md:p-8 rounded-2xl bg-[#1d1836]/80 backdrop-blur-sm border border-gray-800 hover:border-purple-500 transition-colors ${index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'}`}>
                                 <div className="flex items-center gap-4 mb-4">
                                     <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center bg-gray-900 rounded-full border border-gray-800 text-2xl md:text-4xl">
                                         {exp.icon}

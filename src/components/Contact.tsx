@@ -55,9 +55,9 @@ export default function Contact() {
         <section id="contact" className="relative w-full min-h-screen flex flex-col justify-center items-center p-10 bg-transparent snap-start">
             <div className="max-w-7xl w-full z-10 flex flex-col md:flex-row gap-10 overflow-hidden pointer-events-auto">
                 <motion.div
-                    initial={{ x: -50, opacity: 0 }}
-                    whileInView={{ x: 0, opacity: 1 }}
-                    transition={{ duration: isMobile ? 0.8 : 0.4, ease: "easeOut" }}
+                    initial={isMobile ? { y: 20, opacity: 0 } : { x: -50, opacity: 0 }}
+                    whileInView={{ x: 0, y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
                     className="flex-[0.75] bg-[#191924]/80 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-gray-800"
                 >
                     <p className="text-[14px] md:text-[18px] text-gray-400 uppercase tracking-wider">Get in touch</p>
@@ -112,9 +112,9 @@ export default function Contact() {
                 </motion.div>
 
                 <motion.div
-                    initial={{ x: 50, opacity: 0 }}
-                    whileInView={{ x: 0, opacity: 1 }}
-                    transition={{ duration: isMobile ? 0.8 : 0.4, ease: "easeOut" }}
+                    initial={isMobile ? { y: 20, opacity: 0 } : { x: 50, opacity: 0 }}
+                    whileInView={{ x: 0, y: 0, opacity: 1 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
                     className="flex-[0.75] flex items-center justify-center p-8 text-center"
                 >
                     <div>

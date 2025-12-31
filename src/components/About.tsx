@@ -39,22 +39,22 @@ const AboutMemo = () => {
         <section id="about" className="relative w-full min-h-screen mx-auto flex flex-col justify-center items-center px-6 py-10 md:p-14 bg-transparent snap-start">
             <div className="max-w-7xl w-full z-10 pointer-events-auto">
                 <motion.div
-                    initial={isMobile ? { opacity: 0, y: 0 } : { opacity: 0, y: 50 }}
-                    whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-                    transition={{ duration: isMobile ? 0.8 : 0.5, ease: "easeOut" }}
+                    initial={isMobile ? { opacity: 0, y: 30 } : { opacity: 0, y: 50 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.8, ease: "easeOut" }}
                     viewport={{ once: true, amount: 0.1 }}
                 >
                     <p className="text-[14px] md:text-[18px] text-gray-400 uppercase tracking-wider">Introduction</p>
-                    <h2 className="text-white font-black text-[30px] xs:text-[40px] sm:text-[50px] md:text-[60px]">Overview.</h2>
+                    <h2 className="text-white font-black text-[30px] xs:text-[35px] sm:text-[50px] md:text-[60px]">Overview.</h2>
                 </motion.div>
 
                 <div className="mt-4 flex flex-col md:flex-row gap-8 md:gap-10 items-center">
                     <motion.p
-                        initial={isMobile ? { opacity: 0, x: 0 } : { opacity: 0, x: -50 }}
-                        whileInView={isMobile ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
-                        transition={{ delay: isMobile ? 0 : 0.2, duration: isMobile ? 0.8 : 0.5, ease: "easeOut" }}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.2, duration: 0.8, ease: "easeOut" }}
                         viewport={{ once: true, amount: 0.1 }}
-                        className="text-gray-300 text-[15px] md:text-[17px] leading-[26px] md:leading-[30px] flex-1 text-justify"
+                        className="text-gray-300 text-[15px] md:text-[17px] leading-[26px] md:leading-[30px] flex-1 text-left md:text-justify max-w-3xl"
                     >
                         An independent and self-motivated individual with a strong work ethic and commitment to achieving
                         goals, especially in MERN stack and Next.js development. Passionate about learning modern web
@@ -62,17 +62,18 @@ const AboutMemo = () => {
                     </motion.p>
 
                     <motion.div
-                        initial={isMobile ? { opacity: 0, x: 0 } : { opacity: 0, x: 50 }}
-                        whileInView={isMobile ? { opacity: 1, x: 0 } : { opacity: 1, x: 0 }}
-                        transition={{ delay: isMobile ? 0 : 0.2, duration: isMobile ? 0.8 : 0.4, ease: "easeOut" }}
+                        initial={{ opacity: 0, y: 30 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        transition={{ delay: 0.4, duration: 0.8, ease: "easeOut" }}
                         viewport={{ once: true, amount: 0.1 }}
-                        className="relative w-full max-w-[300px] aspect-square flex-shrink-0"
+                        className="relative w-full max-w-[280px] md:max-w-[300px] aspect-square flex-shrink-0"
                     >
                         <div className="w-full h-full rounded-2xl overflow-hidden border-2 border-violet-500/30 shadow-2xl shadow-violet-500/20 group relative">
                             <Image
                                 src="/assets/profile_v2.jpg"
                                 alt="Profile"
                                 fill
+                                priority
                                 sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
                                 className="object-cover object-top grayscale group-hover:grayscale-0 transition-all duration-500 scale-125 group-hover:scale-135 origin-top -translate-x-6"
                             />

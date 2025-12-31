@@ -4,10 +4,6 @@ import dynamic from 'next/dynamic'
 
 import Scene from '@/components/canvas/Scene'
 import Stars from '@/components/canvas/Stars'
-const Spline = dynamic(() => import('@splinetool/react-spline'), {
-  ssr: false,
-  loading: () => <div className="w-full h-full flex items-center justify-center text-white/20">Loading 3D Scene...</div>
-})
 import { motion } from 'framer-motion'
 import React from 'react'
 import { Download } from 'lucide-react'
@@ -26,32 +22,72 @@ import WatermarkBlocker from '@/components/WatermarkBlocker'
 
 export default function Home() {
   const [isMobile, setIsMobile] = React.useState(false);
+  const [showSpline, setShowSpline] = React.useState(false);
 
   React.useEffect(() => {
-    const checkMobile = () => setIsMobile(window.innerWidth < 768);
+    const checkMobile = () => {
+      const mobile = window.innerWidth < 768;
+      setIsMobile(mobile);
+      setShowSpline(!mobile);
+    };
+
+    // Use an optimized resize listener
+    let timeoutId: NodeJS.Timeout;
+    const handleResize = () => {
+      clearTimeout(timeoutId);
+      timeoutId = setTimeout(checkMobile, 150);
+    };
+
     checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
+    window.addEventListener('resize', handleResize);
+
+    return () => {
+      window.removeEventListener('resize', handleResize);
+    };
   }, []);
 
+  const SplineComponent = React.useMemo(() => {
+    if (!showSpline) return null;
+    return dynamic(() => import('@splinetool/react-spline'), {
+      ssr: false,
+      loading: () => (
+        <div className="w-full h-full flex flex-col items-center justify-center bg-black/20 backdrop-blur-sm">
+          <motion.div
+            animate={{ rotate: 360 }}
+            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
+            className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full"
+          />
+          <p className="mt-4 text-purple-400/60 font-medium animate-pulse">Initializing Neural Scene...</p>
+        </div>
+      )
+    });
+  }, [showSpline]);
+
   return (
-    <main className="relative w-full min-h-screen text-white bg-black">
+    <main className="relative w-full min-h-screen text-white bg-black overflow-x-hidden">
       <Navbar />
       <FloatingSocials />
 
-      {!isMobile && (
-        <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none">
-          <Scene>
-            <Stars />
-          </Scene>
-        </div>
-      )}
-
-      <div className="fixed top-0 left-0 w-full h-full z-[1] pointer-events-auto opacity-80">
-        <Spline
-          scene="https://prod.spline.design/w4XzV4rpmJ6ohp8I/scene.splinecode"
-        />
+      {/* Star Background: Always enabled as it's very light */}
+      <div className="fixed top-0 left-0 w-full h-full z-0 pointer-events-none">
+        <Scene>
+          <Stars />
+        </Scene>
       </div>
+
+      {/* Heavy Spline Model: Optimized loading & unmounting */}
+      {SplineComponent && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 0.8 }}
+          transition={{ duration: 1 }}
+          className="fixed top-0 left-0 w-full h-full z-[1] pointer-events-auto"
+        >
+          <SplineComponent
+            scene="https://prod.spline.design/w4XzV4rpmJ6ohp8I/scene.splinecode"
+          />
+        </motion.div>
+      )}
 
       <WatermarkBlocker />
 

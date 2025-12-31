@@ -53,6 +53,7 @@ export default function Navbar() {
                         width={0}
                         height={0}
                         sizes="100vw"
+                        priority
                         className="h-10 w-auto object-contain brightness-110 contrast-110"
                     />
                 </Link>

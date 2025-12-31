@@ -38,6 +38,14 @@ const nextConfig: NextConfig = {
   images: {
     formats: ['image/avif', 'image/webp'],
   },
+  turbopack: {}, // Clear the turbopack error as we are using a custom webpack config
+  webpack: (config) => {
+    config.resolve.alias = {
+      ...config.resolve.alias,
+      'three': path.resolve(projectDir, 'node_modules/three'),
+    };
+    return config;
+  },
 };
 
 export default nextConfig;
