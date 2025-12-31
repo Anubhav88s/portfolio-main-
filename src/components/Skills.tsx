@@ -90,9 +90,9 @@ const TiltCard = (props: { category: typeof skillCategories[0], index: number, i
                 rotateX,
                 transformStyle: "preserve-3d",
             }}
-            initial={props.isMobile ? { opacity: 0, y: 0 } : { opacity: 0, y: 50 }}
-            whileInView={props.isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-            transition={{ duration: props.isMobile ? 0.8 : 0.5, delay: props.index * 0.1, ease: "easeOut" }}
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.5, delay: props.index * 0.1, ease: "easeOut" }}
             viewport={{ once: true, amount: 0.1 }}
             className="relative group w-full h-full"
         >
@@ -167,9 +167,9 @@ const SkillsMemo = () => {
 
             <div className="max-w-7xl w-full px-6 z-10 pointer-events-auto">
                 <motion.div
-                    initial={isMobile ? { opacity: 0, y: 0 } : { opacity: 0, y: -20 }}
-                    whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-                    transition={{ duration: isMobile ? 0.8 : 0.5, ease: "easeOut" }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5, ease: "easeOut" }}
                     viewport={{ once: true, amount: 0.1 }}
                     className="text-center mb-16 md:mb-24"
                 >

@@ -58,8 +58,9 @@ const ProjectsMemo = () => {
         <section id="projects" className="relative w-full min-h-screen flex flex-col justify-center items-center px-6 py-10 md:p-14 bg-transparent snap-start pointer-events-auto">
             <div className="max-w-7xl w-full z-10">
                 <motion.div
-                    initial={isMobile ? { opacity: 0 } : { opacity: 0 }}
-                    whileInView={isMobile ? { opacity: 1 } : { opacity: 1 }}
+                    initial={{ opacity: 0, y: 20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.5 }}
                     viewport={{ once: true, amount: 0.1 }}
                     className="text-center"
                 >
@@ -81,9 +82,9 @@ const ProjectsMemo = () => {
                     {projects.map((project, index) => (
                         <motion.div
                             key={`project-${index}`}
-                            initial={isMobile ? { opacity: 0, y: 0 } : { opacity: 0, y: 50 }}
-                            whileInView={isMobile ? { opacity: 1, y: 0 } : { opacity: 1, y: 0 }}
-                            transition={{ delay: isMobile ? 0 : index * 0.1, duration: isMobile ? 0.8 : 0.4, ease: "easeOut" }}
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            transition={{ delay: isMobile ? 0 : index * 0.1, duration: 0.5, ease: "easeOut" }}
                             viewport={{ once: true, amount: 0.1 }}
                             className="relative bg-[#151030] rounded-2xl w-full sm:w-[360px] cursor-pointer group"
                         >
@@ -95,7 +96,8 @@ const ProjectsMemo = () => {
                                         src={project.image}
                                         alt={project.name}
                                         fill
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 33vw"
+                                        quality={80}
+                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 360px"
                                         className={`transform group-hover:scale-110 transition-transform duration-700 ease-in-out ${project.name === 'Sync-Fit' ? 'object-contain p-2 bg-[#1d1836]' : 'object-cover'}`}
                                     />
                                     <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-[2px]">

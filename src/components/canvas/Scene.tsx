@@ -16,10 +16,17 @@ export default function Scene({ children }: { children: React.ReactNode }) {
       */}
             <Canvas
                 camera={{ position: [0, 0, 1] }}
-                gl={{ antialias: true, alpha: true }}
+                gl={{
+                    antialias: false, // Turn off antialias for better mobile performance
+                    alpha: true,
+                    powerPreference: 'high-performance',
+                    stencil: false,
+                    depth: true
+                }}
                 // Optimize fill-rate on mobile by capping DPR at 1
-                dpr={typeof window !== 'undefined' && window.innerWidth < 768 ? [1, 1] : [1, 1.5]}
+                dpr={typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : [1, 1.5]}
                 className="pointer-events-auto"
+                performance={{ min: 0.5 }} // Allow downscaling if performance drops
             >
                 <AdaptiveDpr pixelated />
                 <Suspense fallback={null}>
