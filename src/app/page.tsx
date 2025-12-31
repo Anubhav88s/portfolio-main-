@@ -29,7 +29,7 @@ export default function Home() {
 
   React.useEffect(() => {
     const checkMobile = () => {
-      const mobile = window.innerWidth < 400;
+      const mobile = window.innerWidth < 600;
       setIsMobile(mobile);
       setShowSpline(!mobile);
     };

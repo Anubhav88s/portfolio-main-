@@ -9,7 +9,7 @@ export default function Stars(props: any) {
     const ref = useRef<any>(null)
     const [sphere] = useState(() => {
         // Drastically reduce count on mobile (Samsung M21/Exynos 9611) to maintain 60FPS
-        const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 400;
+        const isMobileDevice = typeof window !== 'undefined' && window.innerWidth < 600;
         const count = isMobileDevice ? 300 : 1000;
         return inSphere(new Float32Array(count * 3), { radius: 1.5 }) as Float32Array
     })
