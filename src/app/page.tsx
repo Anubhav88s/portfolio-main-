@@ -16,6 +16,9 @@ import Contact from '@/components/Contact'
 import Footer from '@/components/Footer'
 import FloatingSocials from '@/components/FloatingSocials'
 import WatermarkBlocker from '@/components/WatermarkBlocker'
+const SplineScene = dynamic(() => import('@/components/SplineScene'), {
+  ssr: false,
+})
 
 
 
@@ -26,7 +29,7 @@ export default function Home() {
 
   React.useEffect(() => {
     const checkMobile = () => {
-      const mobile = window.innerWidth < 768;
+      const mobile = window.innerWidth < 400;
       setIsMobile(mobile);
       setShowSpline(!mobile);
     };
@@ -46,22 +49,7 @@ export default function Home() {
     };
   }, []);
 
-  const SplineComponent = React.useMemo(() => {
-    if (!showSpline) return null;
-    return dynamic(() => import('@splinetool/react-spline'), {
-      ssr: false,
-      loading: () => (
-        <div className="w-full h-full flex flex-col items-center justify-center bg-black/20 backdrop-blur-sm">
-          <motion.div
-            animate={{ rotate: 360 }}
-            transition={{ duration: 2, repeat: Infinity, ease: "linear" }}
-            className="w-12 h-12 border-4 border-purple-500/30 border-t-purple-500 rounded-full"
-          />
-          <p className="mt-4 text-purple-400/60 font-medium animate-pulse">Initializing Neural Scene...</p>
-        </div>
-      )
-    });
-  }, [showSpline]);
+
 
   return (
     <main className="relative w-full min-h-screen text-white bg-black overflow-x-hidden">
@@ -76,17 +64,8 @@ export default function Home() {
       </div>
 
       {/* Heavy Spline Model: Optimized loading & unmounting */}
-      {SplineComponent && (
-        <motion.div
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 0.8 }}
-          transition={{ duration: 1 }}
-          className="fixed top-0 left-0 w-full h-full z-[1] pointer-events-auto"
-        >
-          <SplineComponent
-            scene="https://prod.spline.design/w4XzV4rpmJ6ohp8I/scene.splinecode"
-          />
-        </motion.div>
+      {showSpline && (
+        <SplineScene scene="https://prod.spline.design/w4XzV4rpmJ6ohp8I/scene.splinecode" />
       )}
 
       <WatermarkBlocker />
