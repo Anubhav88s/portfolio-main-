@@ -24,7 +24,7 @@ export default function Scene({ children }: { children: React.ReactNode }) {
                     depth: true
                 }}
                 // Optimize fill-rate on mobile by capping DPR at 1
-                dpr={typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : [1, 1.5]}
+                dpr={typeof window !== 'undefined' && window.innerWidth < 768 ? 1 : [1, 1.2]}
                 className="pointer-events-auto"
                 performance={{ min: 0.5 }} // Allow downscaling if performance drops
             >
