@@ -13,7 +13,7 @@ export default function PersistentSpline() {
 
     useEffect(() => {
         const checkMobile = () => {
-            const mobile = window.matchMedia('(pointer: coarse)').matches || window.innerWidth < 600
+            const mobile = window.innerWidth < 550
             setIsMobile(mobile)
             setShowSpline(!mobile)
         }
