@@ -3,7 +3,7 @@
 import Link from 'next/link'
 import Image from 'next/image'
 import { useState, useEffect } from 'react'
-import { Menu, X } from 'lucide-react'
+import { Menu, X, Github, Linkedin, Twitter } from 'lucide-react'
 
 const navLinks = [
     { id: 'about', title: 'About' },
@@ -33,7 +33,7 @@ export default function Navbar() {
 
     return (
         <nav
-            className={`fixed w-full flex items-center py-5 fixed top-0 z-50 transition-all duration-300 ${scrolled ? 'pt-4' : 'pt-5'}`}
+            className={`w-full flex items-center py-5 fixed top-0 z-50 transition-all duration-300 ${scrolled ? 'pt-4' : 'pt-5'}`}
         >
             <div className={`w-full flex justify-between items-center max-w-7xl mx-auto px-6 transition-all duration-300 ${scrolled
                 ? 'bg-[#050511]/40 backdrop-blur-md border border-white/5 rounded-full py-3 mt-2 shadow-[0_8px_32px_0_rgba(31,38,135,0.37)]'
@@ -79,8 +79,8 @@ export default function Navbar() {
                     </div>
 
                     <div
-                        className={`${!toggle ? 'hidden' : 'flex'
-                            } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[140px] z-10 rounded-xl bg-gray-900 border border-gray-800`}
+                        className={`${!toggle ? 'hidden' : 'flex flex-col'
+                            } p-6 black-gradient absolute top-20 right-0 mx-4 my-2 min-w-[200px] z-10 rounded-xl bg-gray-900 border border-gray-800`}
                     >
                         <ul className="list-none flex justify-end items-start flex-1 flex-col gap-4">
                             {navLinks.map((link) => (
@@ -96,10 +96,41 @@ export default function Navbar() {
                                     <a href={`#${link.id}`}>{link.title}</a>
                                 </li>
                             ))}
+
                         </ul>
+
+                        <div className="flex gap-4 mt-6 border-t border-gray-800 pt-6 justify-center">
+                            <Link
+                                href="https://www.linkedin.com/in/anubhav-raj-singh-88a03b2b5/"
+                                target="_blank"
+                                className="text-gray-400 hover:text-white transition-colors"
+                            >
+                                <Linkedin size={20} />
+                            </Link>
+                            <Link
+                                href="https://x.com/anubhav741"
+                                target="_blank"
+                                className="text-gray-400 hover:text-white transition-colors"
+                            >
+                                <svg
+                                    viewBox="0 0 24 24"
+                                    aria-hidden="true"
+                                    className="w-5 h-5 fill-current"
+                                >
+                                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                                </svg>
+                            </Link>
+                            <Link
+                                href="https://github.com/Anubhav88s"
+                                target="_blank"
+                                className="text-gray-400 hover:text-white transition-colors"
+                            >
+                                <Github size={20} />
+                            </Link>
+                        </div>
                     </div>
                 </div>
             </div>
-        </nav>
+        </nav >
     )
 }

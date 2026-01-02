@@ -47,103 +47,84 @@ const skillCategories = [
     }
 ]
 
-const TiltCard = (props: { category: typeof skillCategories[0], index: number, isMobile: boolean }) => {
+const SkillCard = (props: { category: typeof skillCategories[0], index: number, isMobile: boolean }) => {
     const { category, index } = props
-    const ref = useRef<HTMLDivElement>(null)
-    const x = useMotionValue(0)
-    const y = useMotionValue(0)
-
-    const mouseXSpring = useSpring(x)
-    const mouseYSpring = useSpring(y)
-
-    const rotateX = useTransform(mouseYSpring, [-0.5, 0.5], ["10deg", "-10deg"])
-    const rotateY = useTransform(mouseXSpring, [-0.5, 0.5], ["-10deg", "10deg"])
-
-    const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
-        if (!ref.current) return
-
-        const rect = ref.current.getBoundingClientRect()
-        const width = rect.width
-        const height = rect.height
-        const mouseX = e.clientX - rect.left
-        const mouseY = e.clientY - rect.top
-
-        const xPct = mouseX / width - 0.5
-        const yPct = mouseY / height - 0.5
-
-        x.set(xPct)
-        y.set(yPct)
-    }
-
-    const handleMouseLeave = () => {
-        x.set(0)
-        y.set(0)
-    }
+    const isTools = category.title === "Tools & Others"
 
     return (
         <motion.div
-            ref={ref}
-            onMouseMove={handleMouseMove}
-            onMouseLeave={handleMouseLeave}
-            style={{
-                rotateY,
-                rotateX,
-                transformStyle: "preserve-3d",
+            initial={{
+                opacity: 0,
+                y: props.isMobile ? 30 : 50,
+                scale: props.isMobile ? 0.95 : 0.9
             }}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: props.index * 0.1, ease: "easeOut" }}
+            whileInView={{
+                opacity: 1,
+                y: 0,
+                scale: 1
+            }}
+            transition={{
+                duration: props.isMobile ? 0.5 : 0.6,
+                delay: props.isMobile ? props.index * 0.05 : props.index * 0.1,
+                type: props.isMobile ? "tween" : "spring",
+                ease: props.isMobile ? "easeOut" : undefined,
+                bounce: props.isMobile ? undefined : 0.4
+            }}
             viewport={{ once: true, amount: 0.1 }}
-            className="relative group w-full h-full"
+            className="h-full"
         >
-            {/* Background Glow */}
-            <div className={`absolute -inset-1 rounded-[2rem] bg-gradient-to-r ${category.color} opacity-20 blur-xl group-hover:opacity-40 transition duration-500`} />
+            <div className="relative h-full w-full bg-[#0a0a0f] border border-white/5 rounded-[2.5rem] overflow-hidden p-8 md:p-10 flex flex-col group hover:border-white/10 transition-all duration-500 shadow-2xl">
+                {/* Background Glow */}
+                <div className={`absolute -inset-1 bg-linear-to-r ${category.color} opacity-10 blur-2xl group-hover:opacity-20 transition duration-500`} />
 
-            <div className="relative h-full bg-[#0a0a0f]/80 backdrop-blur-2xl border border-white/10 rounded-[2rem] overflow-hidden p-8 flex flex-col group-hover:border-white/20 transition-all duration-500">
                 {/* Header Section */}
-                <div style={{ transform: "translateZ(50px)" }} className="mb-8">
-                    <h3 className={`text-4xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r ${category.color} mb-3`}>
+                <div className="mb-10 relative z-10">
+                    <h3 className={`text-4xl md:text-5xl font-black bg-clip-text text-transparent bg-linear-to-r ${category.color} mb-4 tracking-tight`}>
                         {category.title}
                     </h3>
-                    <p className="text-gray-400 text-lg font-medium tracking-tight">
+                    <p className="text-gray-400 text-base md:text-lg font-medium leading-relaxed opacity-80">
                         {category.description}
                     </p>
                 </div>
 
                 {/* Skills Grid */}
-                <div style={{ transform: "translateZ(30px)" }} className="grid grid-cols-2 gap-4 flex-grow">
+                <div className={`grid ${isTools ? 'grid-cols-2 gap-6' : 'grid-cols-2 gap-4'} grow relative z-10`}>
                     {category.skills.map((skill, sIndex) => (
                         <motion.div
                             key={skill.name}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: sIndex * 0.05, duration: 0.2 }}
-                            viewport={{ once: true }}
+                            initial={{ opacity: 0, scale: 0.8 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            transition={{ delay: sIndex * 0.05, duration: 0.3 }}
                             whileHover={{
-                                scale: 1.05,
-                                backgroundColor: "rgba(255,255,255,0.05)",
+                                scale: 1.02,
+                                backgroundColor: "rgba(255,255,255,0.08)",
                                 borderColor: "rgba(255,255,255,0.15)"
                             }}
-                            className="flex items-center gap-3 p-3 rounded-2xl bg-white/[0.03] border border-white/[0.05] transition-all cursor-default group/item"
+                            className={`${isTools
+                                ? 'flex flex-col items-center justify-center p-8 aspect-square'
+                                : 'flex items-center gap-4 p-4'
+                                } rounded-3xl bg-white/5 border border-white/5 transition-all cursor-default group/item shadow-lg`}
                         >
-                            <div className="w-8 h-8 flex items-center justify-center group-hover/item:scale-110 transition-transform duration-300 relative">
+                            <div className={`${isTools ? 'w-12 h-12 mb-4' : 'w-8 h-8'
+                                } flex items-center justify-center group-hover/item:scale-110 transition-transform duration-300 relative`}>
                                 <Image
                                     src={skill.icon}
                                     alt={skill.name}
                                     fill
-                                    sizes="32px"
+                                    sizes={isTools ? "48px" : "32px"}
                                     className="object-contain"
                                 />
                             </div>
-                            <span className="text-sm text-gray-300 font-semibold group-hover/item:text-white transition-colors">
+                            <span className={`${isTools ? 'text-base font-bold' : 'text-sm font-semibold'
+                                } text-gray-300 group-hover/item:text-white transition-colors text-center`}>
                                 {skill.name}
                             </span>
                         </motion.div>
                     ))}
                 </div>
 
-                {/* Decorative Elements */}
-                <div className={`absolute bottom-0 right-0 w-32 h-32 bg-gradient-to-br ${category.color} opacity-5 blur-3xl`} />
+                {/* Decorative Ambient Glow */}
+                <div className={`absolute bottom-0 right-0 w-48 h-48 bg-linear-to-br ${category.color} opacity-10 blur-[100px] pointer-events-none`} />
             </div>
         </motion.div>
     )
@@ -162,8 +143,8 @@ const SkillsMemo = () => {
     return (
         <section id="skills" className="relative w-full min-h-screen py-16 md:py-24 flex flex-col justify-center items-center overflow-hidden snap-start">
             {/* Ambient Background Lights */}
-            <div className="absolute top-1/4 -left-20 w-60 h-60 md:w-80 md:h-80 bg-purple-600/10 rounded-full blur-[100px] md:blur-[120px] pointer-events-none" />
-            <div className="absolute bottom-1/4 -right-20 w-60 h-60 md:w-80 md:h-80 bg-blue-600/10 rounded-full blur-[100px] md:blur-[120px] pointer-events-none" />
+            <div className="absolute top-1/4 -left-20 w-60 h-60 md:w-80 md:h-80 bg-purple-600/5 rounded-full blur-[60px] md:blur-[80px] pointer-events-none" />
+            <div className="absolute bottom-1/4 -right-20 w-60 h-60 md:w-80 md:h-80 bg-blue-600/5 rounded-full blur-[60px] md:blur-[80px] pointer-events-none" />
 
             <div className="max-w-7xl w-full px-6 z-10 pointer-events-auto">
                 <motion.div
@@ -178,7 +159,7 @@ const SkillsMemo = () => {
                     </span>
                     <h2 className="text-4xl md:text-5xl lg:text-7xl font-black text-white mb-6">
                         TECHNICAL{" "}
-                        <span className="bg-clip-text text-transparent bg-gradient-to-r from-purple-400 via-pink-500 to-orange-500">
+                        <span className="bg-clip-text text-transparent bg-linear-to-r from-purple-400 via-pink-500 to-orange-500">
                             ARSENAL.
                         </span>
                     </h2>
@@ -190,7 +171,7 @@ const SkillsMemo = () => {
 
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8 items-stretch">
                     {skillCategories.map((category, index) => (
-                        <TiltCard key={category.title} category={category} index={isMobile ? 0 : index} isMobile={isMobile} />
+                        <SkillCard key={category.title} category={category} index={isMobile ? 0 : index} isMobile={isMobile} />
                     ))}
                 </div>
             </div>

@@ -41,6 +41,18 @@ const projects = [
         ],
         image: "/assets/course-selling.png",
         source_code_link: "https://github.com/Anubhav88s/course-selling.git",
+    },
+    {
+        name: "Page Summarizer",
+        description:
+            "An AI-powered Chrome extension that provides instant summaries of web pages using advanced NLP to distill long articles into concise, readable key points.",
+        tags: [
+            { name: "chrome-extension", color: "text-blue-400" },
+            { name: "reactjs", color: "text-green-400" },
+            { name: "nodejs", color: "text-pink-400" },
+        ],
+        image: "/assets/summarizer.jpg",
+        source_code_link: "https://github.com/Anubhav88s/Page-Summaizer-Chrome-Extenction.git",
     }
 ]
 
@@ -82,50 +94,68 @@ const ProjectsMemo = () => {
                     {projects.map((project, index) => (
                         <motion.div
                             key={`project-${index}`}
-                            initial={{ opacity: 0, y: 20 }}
-                            whileInView={{ opacity: 1, y: 0 }}
-                            transition={{ delay: isMobile ? 0 : index * 0.1, duration: 0.5, ease: "easeOut" }}
+                            initial={{
+                                opacity: 0,
+                                y: isMobile ? 30 : 50,
+                                scale: isMobile ? 0.9 : 0.8,
+                                rotateX: isMobile ? 0 : 10
+                            }}
+                            whileInView={{
+                                opacity: 1,
+                                y: 0,
+                                scale: 1,
+                                rotateX: 0
+                            }}
+                            transition={{
+                                delay: isMobile ? index * 0.05 : index * 0.1,
+                                duration: isMobile ? 0.5 : 0.6,
+                                type: isMobile ? "tween" : "spring",
+                                ease: isMobile ? "easeOut" : undefined,
+                                bounce: isMobile ? undefined : 0.3
+                            }}
                             viewport={{ once: true, amount: 0.1 }}
-                            className="relative bg-[#151030] rounded-2xl w-full sm:w-[360px] cursor-pointer group"
+                            className="relative w-full sm:w-[360px] cursor-pointer group perspective-[1000px]"
                         >
-                            <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-2xl opacity-0 group-hover:opacity-75 blur transition duration-500 group-hover:duration-200"></div>
+                            <div className="relative bg-[#151030] rounded-2xl h-full">
+                                <div className="absolute -inset-0.5 bg-linear-to-r from-pink-600 to-purple-600 rounded-2xl opacity-0 group-hover:opacity-75 blur transition duration-500 group-hover:duration-200" />
 
-                            <div className="relative glass-card p-5 h-full group-hover:border-purple-500/30 transition-colors duration-300">
-                                <div className="relative w-full h-[230px] bg-black/50 rounded-2xl overflow-hidden shadow-2xl">
-                                    <Image
-                                        src={project.image}
-                                        alt={project.name}
-                                        fill
-                                        quality={80}
-                                        sizes="(max-width: 768px) 100vw, (max-width: 1200px) 360px"
-                                        className={`transform group-hover:scale-110 transition-transform duration-700 ease-in-out ${project.name === 'Sync-Fit' ? 'object-contain p-2 bg-[#1d1836]' : 'object-cover'}`}
-                                    />
-                                    <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-[2px]">
-                                        <a
-                                            href={project.source_code_link}
-                                            target="_blank"
-                                            rel="noopener noreferrer"
-                                            className="w-12 h-12 rounded-full bg-black/80 border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black hover:glow-github transition-all duration-300"
-                                        >
-                                            <Github size={24} />
-                                        </a>
+                                <div className="relative bg-[#151030] p-5 h-full border border-white/5 group-hover:border-purple-500/30 transition-colors duration-300 rounded-2xl will-change-transform">
+                                    <div className="relative w-full h-[230px] bg-black/50 rounded-2xl overflow-hidden shadow-2xl">
+                                        <Image
+                                            src={project.image}
+                                            alt={project.name}
+                                            fill
+                                            quality={80}
+                                            sizes="(max-width: 768px) 100vw, (max-width: 1200px) 360px"
+                                            className={`transform group-hover:scale-110 transition-transform duration-700 ease-in-out ${['Sync-Fit', 'Page Summarizer'].includes(project.name) ? 'object-contain p-4 bg-white/5' : 'object-cover'}`}
+                                        />
+                                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-[2px]">
+                                            <a
+                                                href={project.source_code_link}
+                                                target="_blank"
+                                                rel="noopener noreferrer"
+                                                className="w-12 h-12 rounded-full bg-black/80 border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black hover:glow-github transition-all duration-300 hover:scale-110"
+                                            >
+                                                <Github size={24} />
+                                            </a>
+                                        </div>
                                     </div>
-                                </div>
 
-                                <div className="mt-5">
-                                    <h3 className="text-white font-bold text-[24px] group-hover:text-gradient transition-all duration-300">
-                                        {project.name}
-                                    </h3>
-                                    <p className="mt-2 text-secondary text-[14px] text-gray-400 h-[60px] line-clamp-3">
-                                        {project.description}
-                                    </p>
-                                </div>
-                                <div className="mt-4 flex flex-wrap gap-2">
-                                    {project.tags.map((tag) => (
-                                        <p key={tag.name} className={`text-[12px] font-medium ${tag.color} px-3 py-1 rounded-full bg-white/5 border border-white/5`}>
-                                            #{tag.name}
+                                    <div className="mt-5">
+                                        <h3 className="font-bold text-[24px] bg-clip-text text-transparent bg-linear-to-r from-purple-400 to-pink-600 transition-all duration-300">
+                                            {project.name}
+                                        </h3>
+                                        <p className="mt-2 text-secondary text-[14px] text-gray-400 h-[60px] line-clamp-3">
+                                            {project.description}
                                         </p>
-                                    ))}
+                                    </div>
+                                    <div className="mt-4 flex flex-wrap gap-2">
+                                        {project.tags.map((tag) => (
+                                            <p key={tag.name} className={`text-[12px] font-medium ${tag.color} px-3 py-1 rounded-full bg-white/5 border border-white/5`}>
+                                                #{tag.name}
+                                            </p>
+                                        ))}
+                                    </div>
                                 </div>
                             </div>
                         </motion.div>
