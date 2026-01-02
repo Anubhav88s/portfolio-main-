@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 const FloatingSocials = () => {
     return (
-        <div className="hidden lg:flex fixed bottom-0 right-0 z-9999 p-4 flex-col items-end gap-3 pointer-events-none">
+        <div className="flex fixed bottom-0 right-0 z-50 p-4 flex-col items-end gap-3 pointer-events-none">
             <div className="flex flex-col gap-3 pointer-events-auto mr-2">
                 <motion.div
                     initial={{ opacity: 0, x: 20 }}
