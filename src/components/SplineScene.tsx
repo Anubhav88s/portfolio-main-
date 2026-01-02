@@ -1,7 +1,8 @@
 'use client'
 
 import dynamic from 'next/dynamic'
-import { motion } from 'framer-motion'
+import { motion, useInView } from 'framer-motion'
+import React, { useRef } from 'react'
 
 const Spline = dynamic(() => import('@splinetool/react-spline'), {
     ssr: false,
@@ -23,14 +24,22 @@ interface SplineSceneProps {
 }
 
 export default function SplineScene({ scene, className }: SplineSceneProps) {
+    const containerRef = useRef(null);
+    const isInView = useInView(containerRef);
+
     return (
         <motion.div
+            ref={containerRef}
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.8 }}
             transition={{ duration: 1 }}
             className={`absolute top-0 left-0 w-full h-full z-[1] pointer-events-auto ${className || ''}`}
         >
             <Spline scene={scene} renderOnDemand={true} />
+            {/* Watermark Blocker: Integrated to ensure it only shows with the Spline scene and doesn't overlap footer */}
+            {isInView && (
+                <div className="absolute bottom-2 right-2 w-[160px] h-[60px] bg-black bg-opacity-100 pointer-events-none z-[9999] rounded-xl" aria-hidden="true" />
+            )}
         </motion.div>
     )
 }
