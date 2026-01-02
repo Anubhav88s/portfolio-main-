@@ -11,6 +11,7 @@ export const metadata: Metadata = {
 
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
+import CustomCursor from "@/components/CustomCursor";
 
 export default function RootLayout({
   children,
@@ -20,6 +21,7 @@ export default function RootLayout({
   return (
     <html lang="en" className="scroll-smooth overflow-x-hidden">
       <body className="antialiased bg-black text-white selection:bg-purple-500/30">
+        <CustomCursor />
         <ScrollProgress />
         <SmoothScroll>
           {children}
