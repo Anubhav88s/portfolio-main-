@@ -9,10 +9,8 @@ export const metadata: Metadata = {
   },
 };
 
-import CustomCursor from "@/components/CustomCursor";
 import ScrollProgress from "@/components/ScrollProgress";
 import SmoothScroll from "@/components/SmoothScroll";
-import WatermarkBlocker from "@/components/WatermarkBlocker";
 
 export default function RootLayout({
   children,
@@ -21,10 +19,8 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className="scroll-smooth overflow-x-hidden">
-      <body className="antialiased bg-black text-white selection:bg-purple-500/30 cursor-none">
-        <WatermarkBlocker />
+      <body className="antialiased bg-black text-white selection:bg-purple-500/30">
         <ScrollProgress />
-        <CustomCursor />
         <SmoothScroll>
           {children}
         </SmoothScroll>

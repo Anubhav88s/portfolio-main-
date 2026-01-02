@@ -9,7 +9,6 @@ import React from 'react'
 import { Download } from 'lucide-react'
 import Navbar from '@/components/Navbar'
 const FloatingSocials = dynamic(() => import('@/components/FloatingSocials'), { ssr: false })
-const WatermarkBlocker = dynamic(() => import('@/components/WatermarkBlocker'), { ssr: false })
 const About = dynamic(() => import('@/components/About'), { ssr: false })
 const Experience = dynamic(() => import('@/components/Experience'), { ssr: false })
 const Projects = dynamic(() => import('@/components/Projects'), { ssr: false })
@@ -141,7 +140,6 @@ export default function Home() {
               />
             </motion.div>
           </div>
-          <WatermarkBlocker />
         </section>
 
         {/* Individual components will have pointer-events-auto where needed */}
