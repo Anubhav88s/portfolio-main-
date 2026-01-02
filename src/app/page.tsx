@@ -15,20 +15,17 @@ const Projects = dynamic(() => import('@/components/Projects'), { ssr: false })
 const Skills = dynamic(() => import('@/components/Skills'), { ssr: false })
 const Contact = dynamic(() => import('@/components/Contact'), { ssr: false })
 const Footer = dynamic(() => import('@/components/Footer'), { ssr: false })
-const SplineScene = dynamic(() => import('@/components/SplineScene'), { ssr: false })
 
 
 
 
 export default function Home() {
   const [isMobile, setIsMobile] = React.useState(false);
-  const [showSpline, setShowSpline] = React.useState(false);
 
   React.useEffect(() => {
     const checkMobile = () => {
       const mobile = window.innerWidth < 600;
       setIsMobile(mobile);
-      setShowSpline(!mobile);
     };
 
     // Use an optimized resize listener
@@ -73,10 +70,6 @@ export default function Home() {
 
         {/* Hero Section */}
         <section className="h-screen w-full flex flex-col items-center justify-center relative snap-start">
-          {/* Heavy Spline Model: Optimized loading & unmounting */}
-          {showSpline && (
-            <SplineScene scene="https://prod.spline.design/w4XzV4rpmJ6ohp8I/scene.splinecode" />
-          )}
 
           <div className="text-center z-20 pointer-events-auto px-6">
             <h1 className="text-5xl sm:text-7xl md:text-8xl font-black mb-2">
