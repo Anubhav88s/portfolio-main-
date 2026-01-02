@@ -8,17 +8,15 @@ import { motion } from 'framer-motion'
 import React from 'react'
 import { Download } from 'lucide-react'
 import Navbar from '@/components/Navbar'
-import About from '@/components/About'
-import Experience from '@/components/Experience'
-import Projects from '@/components/Projects'
-import Skills from '@/components/Skills'
-import Contact from '@/components/Contact'
-import Footer from '@/components/Footer'
-import FloatingSocials from '@/components/FloatingSocials'
-import WatermarkBlocker from '@/components/WatermarkBlocker'
-const SplineScene = dynamic(() => import('@/components/SplineScene'), {
-  ssr: false,
-})
+const FloatingSocials = dynamic(() => import('@/components/FloatingSocials'), { ssr: false })
+const WatermarkBlocker = dynamic(() => import('@/components/WatermarkBlocker'), { ssr: false })
+const About = dynamic(() => import('@/components/About'), { ssr: false })
+const Experience = dynamic(() => import('@/components/Experience'), { ssr: false })
+const Projects = dynamic(() => import('@/components/Projects'), { ssr: false })
+const Skills = dynamic(() => import('@/components/Skills'), { ssr: false })
+const Contact = dynamic(() => import('@/components/Contact'), { ssr: false })
+const Footer = dynamic(() => import('@/components/Footer'), { ssr: false })
+const SplineScene = dynamic(() => import('@/components/SplineScene'), { ssr: false })
 
 
 
@@ -63,12 +61,9 @@ export default function Home() {
         </Scene>
       </div>
 
-      {/* Heavy Spline Model: Optimized loading & unmounting */}
-      {showSpline && (
-        <SplineScene scene="https://prod.spline.design/w4XzV4rpmJ6ohp8I/scene.splinecode" />
-      )}
 
-      <WatermarkBlocker />
+
+
 
       {/* 
         Main Page Content 
@@ -79,42 +74,55 @@ export default function Home() {
 
         {/* Hero Section */}
         <section className="h-screen w-full flex flex-col items-center justify-center relative snap-start">
+          {/* Heavy Spline Model: Optimized loading & unmounting */}
+          {showSpline && (
+            <SplineScene scene="https://prod.spline.design/w4XzV4rpmJ6ohp8I/scene.splinecode" />
+          )}
+
           <div className="text-center z-20 pointer-events-auto px-6">
-            <h1 className="text-5xl sm:text-7xl md:text-8xl font-black bg-clip-text text-transparent bg-gradient-to-r from-purple-400 to-pink-600 drop-shadow-2xl">
-              FULL STACK
+            <h1 className="text-5xl sm:text-7xl md:text-8xl font-black mb-2">
+              <span className="bg-clip-text text-transparent bg-linear-to-r from-purple-400 to-pink-600 drop-shadow-2xl">
+                FULL STACK
+              </span>
             </h1>
-            <div className="flex justify-center overflow-hidden">
+            <div className="flex justify-center overflow-hidden perspective-[1000px]">
               {Array.from("DEVELOPER").map((letter, index) => (
                 <motion.span
                   key={index}
-                  initial={{ y: 100, opacity: 0 }}
-                  animate={{ y: 0, opacity: 1 }}
+                  initial={{ opacity: 0, rotateX: -90, y: 50 }}
+                  animate={{ opacity: 1, rotateX: 0, y: 0 }}
                   transition={{
-                    duration: 0.5,
+                    duration: isMobile ? 0.4 : 0.8,
                     delay: index * 0.05,
-                    ease: [0.2, 0.65, 0.3, 0.9],
+                    type: isMobile ? "tween" : "spring",
+                    stiffness: 150,
+                    damping: 15,
+                    ease: isMobile ? "easeOut" : undefined
                   }}
-                  className="text-5xl sm:text-7xl md:text-8xl font-black text-transparent drop-shadow-2xl inline-block"
+                  className="text-5xl sm:text-7xl md:text-8xl font-black text-transparent drop-shadow-2xl inline-block origin-bottom transform-style-3d"
                   style={{ WebkitTextStroke: '1px rgba(255,255,255,0.3)' }}
                 >
                   {letter}
                 </motion.span>
               ))}
             </div>
-            <p className="mt-6 text-base sm:text-xl text-purple-400 font-medium tracking-wide bg-black/40 backdrop-blur-md py-2 px-8 rounded-full inline-block border border-purple-500/20 shadow-[0_0_20px_rgba(168,85,247,0.15)]">
-              Hey I am Anubhav Raj Singh
+            <p className="mt-8 text-base sm:text-xl text-purple-200/80 font-medium tracking-wide bg-white/5 py-3 px-8 rounded-full inline-block border border-white/10 hover:border-purple-500/50 transition-colors duration-300 will-change-transform">
+              Hey, I am Anubhav Raj Singh
             </p>
-            <div className="mt-10">
+            <div className="mt-12 flex justify-center">
               <motion.a
                 href="/assets/resume.pdf"
                 download="Anubhav_Resume"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ delay: isMobile ? 0.5 : 1.5, duration: 0.8 }}
-                className="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white transition-all duration-300 bg-gradient-to-r from-purple-600 to-pink-600 rounded-full hover:shadow-[0_0_30px_rgba(168,85,247,0.5)] transform hover:-translate-y-1"
+                initial={{ opacity: 0, scale: 0.5 }}
+                animate={{ opacity: 1, scale: 1 }}
+                transition={{ delay: 1.2, type: "spring", stiffness: 200, damping: 15 }}
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.95 }}
+                className="group relative inline-flex items-center justify-center px-10 py-4 font-bold text-white bg-white/5 border border-white/10 rounded-full overflow-hidden will-change-transform"
               >
-                <span className="flex items-center gap-3">
-                  Download Resume <Download size={20} className="group-hover:translate-y-1 transition-transform" />
+                <div className="absolute inset-0 bg-linear-to-r from-purple-600 to-pink-600 opacity-80 group-hover:opacity-100 transition-opacity duration-300" />
+                <span className="relative flex items-center gap-3 z-10">
+                  Download Resume <Download size={20} className="group-hover:translate-y-1 transition-transform duration-300" />
                 </span>
               </motion.a>
             </div>
@@ -133,6 +141,7 @@ export default function Home() {
               />
             </motion.div>
           </div>
+          <WatermarkBlocker />
         </section>
 
         {/* Individual components will have pointer-events-auto where needed */}

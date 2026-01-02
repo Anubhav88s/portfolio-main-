@@ -1,5 +1,5 @@
 'use client'
-import { motion } from 'framer-motion'
+import { motion, useScroll, useSpring } from 'framer-motion'
 import React from 'react'
 import { ExternalLink } from 'lucide-react'
 
@@ -32,6 +32,16 @@ const experiences = [
 
 const ExperienceMemo = () => {
     const [isMobile, setIsMobile] = React.useState(false);
+    const containerRef = React.useRef<HTMLElement>(null);
+    const { scrollYProgress } = useScroll({
+        target: containerRef,
+        offset: ["start 80%", "end 50%"]
+    });
+    const scaleY = useSpring(scrollYProgress, {
+        stiffness: 100,
+        damping: 30,
+        restDelta: 0.001
+    });
 
     React.useEffect(() => {
         const checkMobile = () => setIsMobile(window.innerWidth < 768);
@@ -41,34 +51,63 @@ const ExperienceMemo = () => {
     }, []);
 
     return (
-        <section id="work" className="relative w-full min-h-screen flex flex-col justify-center items-center px-6 py-10 md:p-14 bg-transparent snap-start">
-            <div className="max-w-7xl w-full z-10 pointer-events-auto">
+        <section ref={containerRef} id="work" className="relative w-full min-h-screen flex flex-col justify-center items-center px-6 py-10 md:p-14 bg-transparent snap-start">
+            <div className="max-w-7xl w-full z-10 pointer-events-auto relative">
                 <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
+                    initial={{ opacity: 0, y: -20 }}
+                    whileInView={{ opacity: 1, y: 0 }}
+                    transition={{ duration: 0.6 }}
                     viewport={{ once: true, amount: 0.1 }}
                 >
                     <p className="text-[14px] md:text-[18px] text-gray-400 uppercase tracking-wider text-center">What I have done so far</p>
                     <h2 className="text-white font-black text-[30px] xs:text-[40px] sm:text-[50px] md:text-[60px] text-center">Work Experience.</h2>
                 </motion.div>
 
-                <div className="mt-12 md:mt-20 flex flex-col gap-8 md:gap-10">
+                <div className="mt-12 md:mt-20 flex flex-col gap-8 md:gap-10 relative">
+                    {/* Animated Timeline Line */}
+                    <motion.div
+                        style={{ scaleY }}
+                        className="absolute left-[24px] md:left-1/2 top-0 w-[2px] h-full bg-linear-to-b from-purple-500 via-pink-500 to-purple-500 origin-top -translate-x-1/2 z-0"
+                    />
+
                     {experiences.map((exp, index) => (
                         <motion.div
                             key={index}
-                            initial={{ opacity: 0, x: index % 2 === 0 ? -100 : 100 }}
-                            whileInView={{ opacity: 1, x: 0 }}
-                            transition={{ duration: 0.8, ease: "easeOut" }}
+                            initial={{
+                                opacity: 0,
+                                y: 50,
+                                x: isMobile ? 0 : (index % 2 === 0 ? -100 : 100)
+                            }}
+                            whileInView={{
+                                opacity: 1,
+                                y: 0,
+                                x: 0
+                            }}
+                            transition={{
+                                duration: isMobile ? 0.5 : 0.7,
+                                type: isMobile ? "tween" : "spring",
+                                ease: isMobile ? "easeOut" : undefined,
+                                bounce: isMobile ? undefined : 0.4,
+                                delay: isMobile ? index * 0.05 : index * 0.1
+                            }}
                             viewport={{ once: true, amount: 0.2 }}
-                            className="w-full flex"
+                            className={`w-full flex relative z-10 ${index % 2 === 0 ? 'md:justify-start' : 'md:justify-end'}`}
                         >
-                            <div className={`w-full md:w-[75%] lg:w-[48%] p-5 md:p-8 rounded-2xl bg-[#1d1836]/80 backdrop-blur-sm border border-gray-800 hover:border-purple-500 transition-colors ${index % 2 === 0 ? 'md:mr-auto' : 'md:ml-auto'}`}>
+                            {/* Timeline Dot */}
+                            <motion.div
+                                initial={{ scale: 0 }}
+                                whileInView={{ scale: 1 }}
+                                transition={{ delay: 0.2, duration: 0.4 }}
+                                className="absolute left-[24px] md:left-1/2 w-4 h-4 bg-purple-500 rounded-full border-4 border-[#1d1836] -translate-x-1/2 mt-8 z-20"
+                            />
+
+                            <div className={`w-[calc(100%-60px)] ml-[60px] md:ml-0 md:w-[45%] p-5 md:p-8 rounded-2xl bg-[#1d1836] border border-gray-800 hover:border-purple-500 transition-all duration-300 hover:shadow-[0_0_30px_rgba(168,85,247,0.1)] group`}>
                                 <div className="flex items-center gap-4 mb-4">
-                                    <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center bg-gray-900 rounded-full border border-gray-800 text-2xl md:text-4xl">
+                                    <div className="w-12 h-12 md:w-16 md:h-16 flex items-center justify-center bg-gray-900 rounded-full border border-gray-800 text-2xl md:text-4xl group-hover:scale-110 transition-transform duration-300 text-shadow-glow">
                                         {exp.icon}
                                     </div>
                                     <div>
-                                        <h3 className="text-white text-[20px] md:text-[24px] font-bold">{exp.title}</h3>
+                                        <h3 className="text-white text-[20px] md:text-[24px] font-bold group-hover:text-purple-400 transition-colors">{exp.title}</h3>
                                         <p className="text-gray-400 text-[14px] md:text-[16px] font-semibold" style={{ margin: 0 }}>{exp.company_name}</p>
                                     </div>
                                 </div>

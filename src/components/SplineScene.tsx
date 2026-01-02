@@ -28,7 +28,7 @@ export default function SplineScene({ scene, className }: SplineSceneProps) {
             initial={{ opacity: 0 }}
             animate={{ opacity: 0.8 }}
             transition={{ duration: 1 }}
-            className={`fixed top-0 left-0 w-full h-full z-[1] pointer-events-auto ${className || ''}`}
+            className={`absolute top-0 left-0 w-full h-full z-[1] pointer-events-auto ${className || ''}`}
         >
             <Spline scene={scene} renderOnDemand={true} />
         </motion.div>

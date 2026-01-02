@@ -58,57 +58,82 @@ export default function Contact() {
                     initial={isMobile ? { y: 20, opacity: 0 } : { x: -50, opacity: 0 }}
                     whileInView={{ x: 0, y: 0, opacity: 1 }}
                     transition={{ duration: 0.5, ease: "easeOut" }}
-                    className="flex-[0.75] bg-[#191924]/80 backdrop-blur-md p-6 md:p-8 rounded-2xl border border-gray-800"
+                    className="flex-[0.75] perspective-[1000px]"
                 >
-                    <p className="text-[14px] md:text-[18px] text-gray-400 uppercase tracking-wider">Get in touch</p>
-                    <h3 className="text-white font-black text-[30px] xs:text-[40px] sm:text-[50px] md:text-[60px]">Contact.</h3>
+                    <div className="bg-[#191924] p-6 md:p-8 rounded-2xl border border-gray-800 h-full will-change-transform">
+                        <p className="text-[14px] md:text-[18px] text-gray-400 uppercase tracking-wider">Get in touch</p>
+                        <h3 className="text-white font-black text-[30px] xs:text-[40px] sm:text-[50px] md:text-[60px]">Contact.</h3>
 
-                    <form ref={formRef} onSubmit={handleSubmit} className="mt-12 flex flex-col gap-8">
-                        <label className="flex flex-col">
-                            <span className="text-white font-medium mb-4">Your Name</span>
-                            <input
-                                type="text"
-                                name="name"
-                                value={form.name}
-                                onChange={handleChange}
-                                placeholder="What's your name?"
-                                className="bg-black/40 py-4 px-6 placeholder:text-gray-500 text-white rounded-lg outline-none border border-white/10 font-medium focus:border-purple-500 focus:bg-black/60 transition-all duration-300"
-                            />
-                        </label>
-                        <label className="flex flex-col">
-                            <span className="text-white font-medium mb-4">Your Email</span>
-                            <input
-                                type="email"
-                                name="email"
-                                value={form.email}
-                                onChange={handleChange}
-                                placeholder="What's your email?"
-                                className="bg-black/40 py-4 px-6 placeholder:text-gray-500 text-white rounded-lg outline-none border border-white/10 font-medium focus:border-purple-500 focus:bg-black/60 transition-all duration-300"
-                            />
-                        </label>
-                        <label className="flex flex-col">
-                            <span className="text-white font-medium mb-4">Your Message</span>
-                            <textarea
-                                rows={7}
-                                name="message"
-                                value={form.message}
-                                onChange={handleChange}
-                                placeholder="What do you want to say?"
-                                className="bg-black/40 py-4 px-6 placeholder:text-gray-500 text-white rounded-lg outline-none border border-white/10 font-medium resize-none focus:border-purple-500 focus:bg-black/60 transition-all duration-300"
-                            />
-                        </label>
-
-                        <button
-                            type="submit"
-                            disabled={loading || success}
-                            className={`py-3 px-8 outline-none w-fit text-white font-bold shadow-md rounded-xl flex items-center gap-2 transform transition-all duration-300 ${success ? 'bg-green-600' : 'bg-gradient-to-r from-purple-600 to-pink-600 hover:-translate-y-1 hover:shadow-lg hover:shadow-purple-500/30'
-                                }`}
+                        <motion.form
+                            ref={formRef}
+                            onSubmit={handleSubmit}
+                            initial="hidden"
+                            whileInView="visible"
+                            viewport={{ once: true, amount: 0.1 }}
+                            variants={{
+                                hidden: {},
+                                visible: {
+                                    transition: {
+                                        staggerChildren: 0.1
+                                    }
+                                }
+                            }}
+                            className="mt-12 flex flex-col gap-8"
                         >
-                            {loading ? 'Sending...' : success ? 'Message Sent!' : 'Send'}
-                            {!success && !loading && <Send size={18} />}
-                            {success && <span className="text-xl">✓</span>}
-                        </button>
-                    </form>
+                            {[
+                                { label: "Your Name", name: "name", type: "text", placeholder: "What's your name?" },
+                                { label: "Your Email", name: "email", type: "email", placeholder: "What's your email?" },
+                                { label: "Your Message", name: "message", type: "textarea", placeholder: "What do you want to say?" }
+                            ].map((input) => (
+                                <motion.label
+                                    key={input.name}
+                                    variants={{
+                                        hidden: { opacity: 0, y: 20 },
+                                        visible: { opacity: 1, y: 0 }
+                                    }}
+                                    className="flex flex-col"
+                                >
+                                    <span className="text-white font-medium mb-4">{input.label}</span>
+                                    {input.type === 'textarea' ? (
+                                        <textarea
+                                            rows={7}
+                                            name={input.name}
+                                            value={(form as any)[input.name]}
+                                            onChange={handleChange}
+                                            placeholder={input.placeholder}
+                                            className="bg-black/40 py-4 px-6 placeholder:text-gray-500 text-white rounded-lg outline-none border border-white/10 font-medium resize-none focus:border-purple-500 focus:bg-black/60 transition-all duration-300"
+                                        />
+                                    ) : (
+                                        <input
+                                            type={input.type}
+                                            name={input.name}
+                                            value={(form as any)[input.name]}
+                                            onChange={handleChange}
+                                            placeholder={input.placeholder}
+                                            className="bg-black/40 py-4 px-6 placeholder:text-gray-500 text-white rounded-lg outline-none border border-white/10 font-medium focus:border-purple-500 focus:bg-black/60 transition-all duration-300"
+                                        />
+                                    )}
+                                </motion.label>
+                            ))}
+
+                            <motion.button
+                                variants={{
+                                    hidden: { opacity: 0, y: 20 },
+                                    visible: { opacity: 1, y: 0 }
+                                }}
+                                whileHover={{ scale: 1.05 }}
+                                whileTap={{ scale: 0.95 }}
+                                type="submit"
+                                disabled={loading || success}
+                                className={`py-3 px-10 outline-none w-fit text-white font-bold shadow-md rounded-xl flex items-center gap-2 transform transition-all duration-300 ${success ? 'bg-green-600' : 'bg-linear-to-r from-purple-600 to-pink-600 hover:shadow-lg hover:shadow-purple-500/30'
+                                    }`}
+                            >
+                                {loading ? 'Sending...' : success ? 'Message Sent!' : 'Send'}
+                                {!success && !loading && <Send size={18} />}
+                                {success && <span className="text-xl">✓</span>}
+                            </motion.button>
+                        </motion.form>
+                    </div>
                 </motion.div>
 
                 <motion.div
