@@ -43,6 +43,7 @@ const skillCategories = [
             { name: "Figma", icon: "/assets/figma.png" },
             { name: "API", icon: "/assets/api.png" },
             { name: "Postman", icon: "/assets/Postman.png" },
+            { name: "Docker", icon: "/assets/docker.png" },
         ]
     }
 ]
@@ -105,13 +106,14 @@ const SkillCard = (props: { category: typeof skillCategories[0], index: number, 
                                 : 'flex items-center gap-4 p-4'
                                 } rounded-3xl bg-white/5 border border-white/5 transition-all cursor-default group/item shadow-lg`}
                         >
-                            <div className={`${isTools ? 'w-12 h-12 mb-4' : 'w-8 h-8'
+                            <div className={`${skill.name === "Docker" ? "w-20 h-20 mb-4" :
+                                isTools ? 'w-12 h-12 mb-4' : 'w-8 h-8'
                                 } flex items-center justify-center group-hover/item:scale-110 transition-transform duration-300 relative`}>
                                 <Image
                                     src={skill.icon}
                                     alt={skill.name}
                                     fill
-                                    sizes={isTools ? "48px" : "32px"}
+                                    sizes={skill.name === "Docker" ? "80px" : isTools ? "48px" : "32px"}
                                     className="object-contain"
                                 />
                             </div>
