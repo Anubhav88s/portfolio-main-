@@ -6,6 +6,18 @@ import { Github, ExternalLink } from 'lucide-react'
 
 const projects = [
     {
+        name: "ZyncTalk",
+        description: "A real-time chat application featuring secure messaging, user authentication, and profile management. Built with a modern tech stack for a seamless communication experience.",
+        tags: [
+            { name: "react.js", color: "text-blue-500" },
+            { name: "socket.io", color: "text-green-500" },
+            { name: "express", color: "text-pink-500" },
+        ],
+        image: "/assets/zynctalk.png",
+        source_code_link: "https://github.com/Anubhav88s/Chat-app-zyncTalk.git",
+        live_link: "https://zynctalk.onrender.com",
+    },
+    {
         name: "Second-Brain",
         description:
             "A digital knowledge management system designed to capture, organize, and retrieve information efficiently. Enhances thinking, creativity, and productivity while enabling seamless content sharing.",
@@ -138,6 +150,16 @@ const ProjectsMemo = () => {
                                             >
                                                 <Github size={24} />
                                             </a>
+                                            {project.live_link && (
+                                                <a
+                                                    href={project.live_link}
+                                                    target="_blank"
+                                                    rel="noopener noreferrer"
+                                                    className="w-12 h-12 rounded-full bg-black/80 border border-white/20 flex items-center justify-center text-white hover:bg-white hover:text-black hover:glow-external transition-all duration-300 hover:scale-110"
+                                                >
+                                                    <ExternalLink size={24} />
+                                                </a>
+                                            )}
                                         </div>
                                     </div>
 
