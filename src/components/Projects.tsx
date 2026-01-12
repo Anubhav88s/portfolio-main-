@@ -70,9 +70,10 @@ const projects = [
 
 const ProjectsMemo = () => {
     const [isMobile, setIsMobile] = React.useState(false);
+    const [activeProjectId, setActiveProjectId] = React.useState<number | null>(null);
 
     React.useEffect(() => {
-        const checkMobile = () => setIsMobile(window.innerWidth < 768);
+        const checkMobile = () => setIsMobile(window.innerWidth < 1024);
         checkMobile();
         window.addEventListener('resize', checkMobile);
         return () => window.removeEventListener('resize', checkMobile);
@@ -106,6 +107,11 @@ const ProjectsMemo = () => {
                     {projects.map((project, index) => (
                         <motion.div
                             key={`project-${index}`}
+                            onClick={() => {
+                                if (isMobile) {
+                                    setActiveProjectId(activeProjectId === index ? null : index);
+                                }
+                            }}
                             initial={{
                                 opacity: 0,
                                 y: isMobile ? 30 : 50,
@@ -129,9 +135,9 @@ const ProjectsMemo = () => {
                             className="relative w-full sm:w-[360px] cursor-pointer group perspective-[1000px]"
                         >
                             <div className="relative bg-[#151030] rounded-2xl h-full">
-                                <div className="absolute -inset-0.5 bg-linear-to-r from-pink-600 to-purple-600 rounded-2xl opacity-0 group-hover:opacity-75 blur transition duration-500 group-hover:duration-200" />
+                                <div className={`absolute -inset-0.5 bg-linear-to-r from-pink-600 to-purple-600 rounded-2xl opacity-0 ${activeProjectId === index ? 'opacity-75' : 'group-hover:opacity-75'} blur transition duration-500 group-hover:duration-200`} />
 
-                                <div className="relative bg-[#151030] p-5 h-full border border-white/5 group-hover:border-purple-500/30 transition-colors duration-300 rounded-2xl will-change-transform">
+                                <div className={`relative bg-[#151030] p-5 h-full border border-white/5 ${activeProjectId === index ? 'border-purple-500/30' : 'group-hover:border-purple-500/30'} transition-colors duration-300 rounded-2xl will-change-transform`}>
                                     <div className="relative w-full h-[230px] bg-black/50 rounded-2xl overflow-hidden shadow-2xl">
                                         <Image
                                             src={project.image}
@@ -139,9 +145,9 @@ const ProjectsMemo = () => {
                                             fill
                                             quality={80}
                                             sizes="(max-width: 768px) 100vw, (max-width: 1200px) 360px"
-                                            className={`transform group-hover:scale-110 transition-transform duration-700 ease-in-out ${['Sync-Fit', 'Page Summarizer'].includes(project.name) ? 'object-contain p-4 bg-white/5' : 'object-cover'}`}
+                                            className={`transform ${activeProjectId === index ? 'scale-110' : 'group-hover:scale-110'} transition-transform duration-700 ease-in-out ${['Sync-Fit', 'Page Summarizer'].includes(project.name) ? 'object-contain p-4 bg-white/5' : 'object-cover'}`}
                                         />
-                                        <div className="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-[2px]">
+                                        <div className={`absolute inset-0 bg-black/60 ${activeProjectId === index ? 'opacity-100' : 'opacity-0 group-hover:opacity-100'} transition-opacity duration-300 flex items-center justify-center gap-4 backdrop-blur-[2px]`}>
                                             <a
                                                 href={project.source_code_link}
                                                 target="_blank"
