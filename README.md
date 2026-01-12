@@ -1,36 +1,56 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Anubhav Raj Singh - Portfolio
 
-## Getting Started
+A modern, responsive portfolio website built with Next.js, Framer Motion, and Three.js.
 
-First, run the development server:
+## 🚀 Tech Stack
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- **Framework**: [Next.js](https://nextjs.org/) (App Router)
+- **Styling**: [Tailwind CSS](https://tailwindcss.com/)
+- **Animations**: [Framer Motion](https://www.framer.com/motion/)
+- **3D Graphics**: [Spline](https://spline.design/), [Three.js](https://threejs.org/), [@react-three/fiber](https://r3f.docs.pmnd.rs/)
+- **Icons**: [Lucide React](https://lucide.dev/)
+- **Smooth Scrolling**: [Lenis](https://github.com/darkroomengineering/lenis)
+- **Email Service**: [EmailJS](https://www.emailjs.com/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## ✨ Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **3D Interactivity**: Immersive 3D scenes integrated with Spline.
+- **Smooth Animations**: High-performance animations using Framer Motion.
+- **Responsive Design**: Fully optimized for mobile, tablet, and desktop.
+- **Contact Form**: Functional contact form powered by EmailJS.
+- **Modern UI**: Sleek, glassmorphic design system.
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Getting Started
 
-## Learn More
+### Prerequisites
 
-To learn more about Next.js, take a look at the following resources:
+- Node.js (Latest LTS version recommended)
+- npm or yarn
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Installation
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+1. Clone the repository:
+   ```bash
+   git clone https://github.com/Anubhav88s/portfolio-main-.git
+   ```
 
-## Deploy on Vercel
+2. Install dependencies:
+   ```bash
+   npm install
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+3. Run the development server:
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+4. Open [http://localhost:3000](http://localhost:3000) in your browser.
+
+## 👤 Author
+
+**Anubhav Raj Singh**
+- GitHub: [@Anubhav88s](https://github.com/Anubhav88s)
+- LinkedIn: [Anubhav Raj Singh](https://www.linkedin.com/in/anubhav-raj-singh-0bb2a7251/)
+
+---
+Created with ❤️ by Anubhav.
