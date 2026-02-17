@@ -6,6 +6,18 @@ import { Github, ExternalLink } from 'lucide-react'
 
 const projects = [
     {
+        name: "Zendraw",
+        description: "Zendraw is a real-time collaborative whiteboard built from scratch with an infinite canvas, smooth drawing tools, and live multi-user syncing via WebSockets.",
+        tags: [
+            { name: "next.js", color: "text-white" },
+            { name: "socket.io", color: "text-green-500" },
+            { name: "postgresql", color: "text-blue-500" },
+        ],
+        image: "/assets/zendraw.png",
+        source_code_link: "https://github.com/Anubhav88s/zendraw.git",
+        live_link: "https://zendraw-frontend.onrender.com",
+    },
+    {
         name: "ZyncTalk",
         description: "A real-time chat application featuring secure messaging, user authentication, and profile management. Built with a modern tech stack for a seamless communication experience.",
         tags: [
